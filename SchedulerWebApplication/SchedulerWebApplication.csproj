@@ -11,12 +11,11 @@
       <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.2.1" />
       <PackageReference Include="GraphQL.Server.Ui.Playground" Version="6.0.0" />
       <PackageReference Include="GraphQL.StarWars" Version="1.0.0" />
+      <PackageReference Include="HotChocolate" Version="13.0.0-preview.15" />
+      <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.0-preview.15" />
       <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.3.22175.4" Condition="$(PublishNativeAot) == True" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <RdXmlFile Include="Microsoft.AspNetCore.rd.xml" />
-      <RdXmlFile Include="GraphQL.rd.xml" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.16" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.16" />
     </ItemGroup>
 
 </Project>
