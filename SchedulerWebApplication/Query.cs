@@ -7,14 +7,12 @@ namespace SchedulerWebApplication
 {
     public class Query
     {
-        private IQueryable<Account> accounts;
-
         public IQueryable<Account> GetAccounts([Service]SchedulerContext context) =>
             context.Accounts.Include(b => b.Executors).Include(a => a.Flows);
         
         public Account GetLogin([Service]SchedulerContext context, string login, string password)
         {
-            accounts = context.Accounts.Include(b => b.Executors).Include(a => a.Flows)
+            var accounts = context.Accounts.Include(b => b.Executors).Include(a => a.Flows)
                 .Where(p => p.Login.Equals(login) && p.Password.Equals(password));
             if(accounts.Any())
                 return accounts.First();

@@ -32,17 +32,7 @@ namespace SchedulerExecutorApplication
         private static async Task ConfigureIfNeeded(ISchedulerServer schedulerServer)
         {
             var currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent;
-            var configPath = Path.Combine(currentDirectory!.FullName, "app.config");
             var executablePath = Path.Combine(currentDirectory!.FullName, "Program.cs");
-            /*if (!File.Exists(configPath))
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
-                sb.AppendLine("<configuration>");
-                sb.AppendLine("</configuration>");
-                File.WriteAllText(configPath, sb.ToString());
-                Console.WriteLine("Config file created");
-            }*/
 
             Configuration config = ConfigurationManager.OpenExeConfiguration(executablePath);
 
@@ -84,13 +74,15 @@ namespace SchedulerExecutorApplication
                 Console.WriteLine("Executor description: ");
                 var description = Console.ReadLine();
                 var accountId = Int32.Parse(config.AppSettings.Settings["accountId"].Value);
+                Console.WriteLine("Registering...");
                 var executorInput = new ExecutorInput { AccountId = accountId, Name = name, Description = description};
                 var result = await schedulerServer.CreateExecutor.ExecuteAsync(executorInput);
                 result.EnsureNoErrors();
                 config.AppSettings.Settings.Add("executorId", result.Data?.CreateExecutor?.Id.ToString());
+                config.AppSettings.Settings.Add("executorName", result.Data?.CreateExecutor?.Name);
                 config.Save(ConfigurationSaveMode.Minimal);
             }
-            Console.WriteLine($"Executor is registered with id {config.AppSettings.Settings["executorId"].Value}");
+            Console.WriteLine($"Executor {config.AppSettings.Settings["executorName"].Value} is registered with id {config.AppSettings.Settings["executorId"].Value}");
 
         }
 

@@ -1,5 +1,6 @@
 ﻿mutation CreateExecutor($executor: ExecutorInput){
     createExecutor(executorInput: $executor){
-        id
+        id,
+        name
     }
 }
