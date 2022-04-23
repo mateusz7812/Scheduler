@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerWebApplication", "SchedulerWebApplication\SchedulerWebApplication.csproj", "{49287997-1F03-47A2-A03D-0D9D50CE78F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchedulerExecutorApplication", "SchedulerExecutorApplication\SchedulerExecutorApplication.csproj", "{31A9DD76-20BF-40D8-A0A3-9C9A0994E5A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{49287997-1F03-47A2-A03D-0D9D50CE78F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49287997-1F03-47A2-A03D-0D9D50CE78F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49287997-1F03-47A2-A03D-0D9D50CE78F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31A9DD76-20BF-40D8-A0A3-9C9A0994E5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A9DD76-20BF-40D8-A0A3-9C9A0994E5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A9DD76-20BF-40D8-A0A3-9C9A0994E5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A9DD76-20BF-40D8-A0A3-9C9A0994E5A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

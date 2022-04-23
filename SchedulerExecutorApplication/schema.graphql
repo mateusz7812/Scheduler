@@ -1,0 +1,88 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  accounts: [Account]
+  login(login: String password: String): Account
+  executorsForAccount(accountId: Int!): [Executor]
+  flowsForAccount(accountId: Int!): [Flow]
+  tasks: [Task]
+}
+
+type Mutation {
+  createAccount(accountInput: AccountInput): AccountOutput
+  createExecutor(executorInput: ExecutorInput): Executor
+  createTask(taskInput: TaskInput): Task
+}
+
+type Executor {
+  id: Int!
+  name: String
+  description: String
+  account: Account
+}
+
+type Account {
+  id: Int!
+  login: String
+  executors: [Executor]
+  flows: [Flow]
+}
+
+type Flow {
+  id: Int!
+  flowTaskId: Int!
+  name: String
+  description: String
+}
+
+type Task {
+  id: Int!
+  inputType: String
+  outputType: String
+  name: String
+  command: String
+  firstTaskId: Int!
+  flowTasks: [FlowTask]
+}
+
+type AccountOutput {
+  id: Int!
+  login: String
+}
+
+input AccountInput {
+  login: String
+  password: String
+}
+
+input ExecutorInput {
+  accountId: Int!
+  name: String
+  description: String
+}
+
+input TaskInput {
+  inputType: String
+  outputType: String
+  name: String
+  command: String
+}
+
+type FlowTask {
+  id: Int!
+  taskId: Int!
+  flow: Flow
+  task: Task
+  predecessors: [StartingUp]
+  successors: [StartingUp]
+}
+
+type StartingUp {
+  successorId: Int!
+  predecessorId: Int!
+  successor: FlowTask
+  predecessor: FlowTask
+}
