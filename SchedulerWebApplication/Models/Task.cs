@@ -14,7 +14,6 @@ namespace SchedulerWebApplication.Models
         public string OutputType { get; set; }
         public string Name { get; set; }
         public string Command { get; set; }
-        public int FirstTaskId { get; set; }
         public virtual ICollection<FlowTask> FlowTasks { get; set; }
     }
 }

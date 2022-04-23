@@ -1,8 +1,8 @@
 ﻿namespace SchedulerWebApplication.Mutations
 {
-    public class ExecutorInput
+    public class CreateExecutorInput
     {
-        public ExecutorInput(int accountId, string name, string description)
+        public CreateExecutorInput(int accountId, string name, string description)
         {
             AccountId = accountId;
             Name = name;

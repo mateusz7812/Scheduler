@@ -13,6 +13,7 @@
       <PackageReference Include="GraphQL.StarWars" Version="1.0.0" />
       <PackageReference Include="HotChocolate" Version="13.0.0-preview.15" />
       <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.0-preview.15" />
+      <PackageReference Include="Microsoft.AspNet.Cors" Version="5.2.8" />
       <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.3.22175.4" Condition="$(PublishNativeAot) == True" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.16" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.16" />

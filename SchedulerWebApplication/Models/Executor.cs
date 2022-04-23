@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using HotChocolate;
 
 namespace SchedulerWebApplication.Models
@@ -15,5 +17,18 @@ namespace SchedulerWebApplication.Models
         public string Description { get; set; }
         
         public virtual Account Account { get; set; }
+        
+        [NotMapped]
+        public ExecutorStatusCode Status
+        {
+            get
+            {
+                return Statuses?.OrderByDescending(t => t.Date).FirstOrDefault()?.StatusCode ??
+                       ExecutorStatusCode.Offline;
+            }
+            set{}
+        }
+
+        [GraphQLIgnore] public ICollection<ExecutorStatus> Statuses { get; set; } = new List<ExecutorStatus>();
     }
 }

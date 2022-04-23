@@ -8,7 +8,7 @@ namespace SchedulerWebApplication
     public class Query
     {
         public IQueryable<Account> GetAccounts([Service]SchedulerContext context) =>
-            context.Accounts.Include(b => b.Executors).Include(a => a.Flows);
+            context.Accounts.Include(b => b.Executors).ThenInclude(t => t.Statuses).Include(a => a.Flows);
         
         public Account GetLogin([Service]SchedulerContext context, string login, string password)
         {

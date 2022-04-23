@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using HotChocolate;
+using HotChocolate.Subscriptions;
 using Microsoft.EntityFrameworkCore;
 using SchedulerWebApplication.Models;
 
@@ -8,7 +10,7 @@ namespace SchedulerWebApplication.Mutations
     public class Mutation
     {
         public async Task<AccountOutput> CreateAccount(
-            AccountInput accountInput,
+            CreateAccountInput accountInput,
             [Service] SchedulerContext context
             )
         {
@@ -18,7 +20,7 @@ namespace SchedulerWebApplication.Mutations
         }
         
         public async Task<Executor> CreateExecutor(
-            ExecutorInput executorInput,
+            CreateExecutorInput executorInput,
             [Service] SchedulerContext context
         )
         {
@@ -41,6 +43,27 @@ namespace SchedulerWebApplication.Mutations
             })).Entity;
             await context.SaveChangesAsync();
             return savedTask;
+        }
+        
+        public async Task<ExecutorStatus> CreateStatus(
+            ExecutorStatusInput executorStatusInput,
+            [Service] SchedulerContext context,
+            [Service]ITopicEventSender eventSender
+        )
+        {
+            var savedStatus = (await context.ExecutorStatuses.AddAsync( new ExecutorStatus
+            {
+                Date = executorStatusInput.Date,
+                ExecutorId = executorStatusInput.ExecutorId,
+                StatusCode = executorStatusInput.StatusCode
+            })).Entity;
+            await context.SaveChangesAsync();
+            var accountId = context.Executors.Include(t => t.Account).First(t => t.Id == executorStatusInput.ExecutorId)
+                .Account.Id;
+            await eventSender
+                .SendAsync($"account{accountId}" , savedStatus)
+                .ConfigureAwait(false);
+            return savedStatus;
         }
     }
 }

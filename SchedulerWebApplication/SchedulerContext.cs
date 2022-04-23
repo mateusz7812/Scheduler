@@ -15,6 +15,8 @@ namespace SchedulerWebApplication
         
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Executor> Executors { get; set; }
+        
+        public DbSet<ExecutorStatus> ExecutorStatuses { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Flow> Flows { get; set; }
         public DbSet<FlowTask> FlowTasks { get; set; }
@@ -32,6 +34,11 @@ namespace SchedulerWebApplication
                 .HasMany(t => t.Executors)
                 .WithOne(t => t.Account)
                 .HasForeignKey(t => t.AccountId);
+
+            modelBuilder.Entity<Executor>()
+                .HasMany(t => t.Statuses)
+                .WithOne()
+                .HasForeignKey(t => t.ExecutorId);
             
             modelBuilder.Entity<Account>()
                 .HasMany(t => t.Flows)

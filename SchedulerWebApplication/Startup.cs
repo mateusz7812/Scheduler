@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +11,7 @@ using HotChocolate.Execution.Configuration;
 using Microsoft.EntityFrameworkCore;
 using SchedulerWebApplication.Models;
 using SchedulerWebApplication.Mutations;
+using SchedulerWebApplication.Subscriptions;
 
 namespace SchedulerWebApplication
 {
@@ -18,11 +20,19 @@ namespace SchedulerWebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddCors(options =>
+                    options.AddDefaultPolicy(policy =>
+                        policy.WithOrigins("*").AllowAnyHeader()
+                    )
+                )
                 .AddRouting()
                 .AddDbContext<SchedulerContext>()
                 .AddGraphQLServer()
                     .AddQueryType<Query>()
-                    .AddMutationType<Mutation>();
+                    .AddMutationType<Mutation>()
+                    .AddSubscriptionType<Subscription>()
+                .AddInMemorySubscriptions()
+                .AddApolloTracing();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,10 +46,8 @@ namespace SchedulerWebApplication
             }
 
             app.UseRouting();
-
-            //app.UseGraphQL();
-            //app.UsePlayground();
-
+            app.UseCors();
+            app.UseWebSockets();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
@@ -49,6 +57,7 @@ namespace SchedulerWebApplication
                 endpoints.MapGraphQL();
                 endpoints.MapGraphQLPlayground();
             });
+            
         }
 
         private static void InitializeDatabase(IApplicationBuilder app)
@@ -106,6 +115,10 @@ namespace SchedulerWebApplication
                     {
                         TaskId = task2.Entity.Id
                     });
+
+                    context.ExecutorStatuses.Add(new ExecutorStatus{Date = 123, StatusCode = ExecutorStatusCode.Online, ExecutorId = 1});
+                    context.ExecutorStatuses.Add(new ExecutorStatus{Date = 121, StatusCode = ExecutorStatusCode.Offline, ExecutorId = 1});
+                    context.ExecutorStatuses.Add(new ExecutorStatus{Date = 124, StatusCode = ExecutorStatusCode.Working, ExecutorId = 1});
 
                     context.SaveChanges();
                     context.StartingUps.Add(new StartingUp
