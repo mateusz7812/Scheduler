@@ -60,12 +60,12 @@ namespace SchedulerWebApplication
 
             modelBuilder.Entity<StartingUp>()
                 .HasOne(t => t.Predecessor)
-                .WithMany(t => t.Predecessors)
+                .WithMany(t => t.Successors)
                 .HasForeignKey(t => t.PredecessorId);
 
             modelBuilder.Entity<StartingUp>()
                 .HasOne(t => t.Successor)
-                .WithMany(t => t.Successors)
+                .WithMany(t => t.Predecessors)
                 .HasForeignKey(t => t.SuccessorId);
             
             

@@ -58,6 +58,29 @@ namespace SchedulerExecutorApplication
             }
         }
 
+        class FlowStartObserver : IObserver<IOperationResult<IOnFlowStartResult>>
+        {
+            public void OnCompleted()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void OnError(Exception error)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void OnNext(IOperationResult<IOnFlowStartResult> value)
+            {
+                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.Name} starting");
+                SendStatus(ExecutorStatusCode.Working).Wait();
+                Console.WriteLine($"Executor working...");
+                Thread.Sleep(10000);
+                Console.WriteLine($"Flow end");
+                SendStatus(ExecutorStatusCode.Online).Wait();
+            }
+        }
+        
         public async void Start() {
             
             var currentDirectory = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent;
@@ -69,17 +92,20 @@ namespace SchedulerExecutorApplication
             serviceCollection
                 .AddSchedulerServer()
                 .ConfigureHttpClient(client =>
-                    client.BaseAddress = new Uri("http://localhost:3000/graphql"));
+                    client.BaseAddress = new Uri("http://localhost:3000/graphql"))
+                .ConfigureWebSocketClient(client => 
+                    client.Uri = new Uri("ws://localhost:3000/graphql"));
             IServiceProvider services = serviceCollection.BuildServiceProvider();
             _schedulerServer = services.GetRequiredService<ISchedulerServer>();
 
             if(!Configured())
                 await Configure();
+            var executorId = Convert.ToInt32(config.AppSettings.Settings["executorId"].Value);
             await SendStatus(ExecutorStatusCode.Online);
             Console.WriteLine("Press Ctr+C to exit");
             Console.WriteLine("start working");
-            Thread.Sleep(5000);
-            Console.WriteLine("end working");
+            IObserver<IOperationResult<IOnFlowStartResult>> observer = new FlowStartObserver();
+            _schedulerServer.OnFlowStart.Watch($"executor{executorId}").Subscribe(observer);
         }
 
         private static async Task SendStatus(ExecutorStatusCode code)
@@ -148,7 +174,6 @@ namespace SchedulerExecutorApplication
                 config.Save(ConfigurationSaveMode.Minimal);
             }
             Console.WriteLine($"Executor {config.AppSettings.Settings["executorName"].Value} is registered with id {config.AppSettings.Settings["executorId"].Value}");
-
         }
 
         private static string ReadPassword()

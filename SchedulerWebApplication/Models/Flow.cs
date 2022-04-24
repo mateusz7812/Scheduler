@@ -11,7 +11,7 @@ namespace SchedulerWebApplication.Models
         public int Id { get; set; }
         [GraphQLIgnore]
         public int AccountId { get; set; }
-        public int FlowTaskId { get; set; }
+        public int? FlowTaskId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         

@@ -10,6 +10,7 @@ type Query {
   executorsForAccount(accountId: Int!): [Executor]
   flowsForAccount(accountId: Int!): [Flow]
   tasks: [Task]
+  flowTasksForFlow(flowId: Int!): [FlowTask]
 }
 
 type Mutation {
@@ -17,15 +18,17 @@ type Mutation {
   createExecutor(executorInput: CreateExecutorInput): Executor
   createTask(taskInput: TaskInput): Task
   createStatus(executorStatusInput: ExecutorStatusInput): ExecutorStatus
+  createFlowStart(flowId: Int! executorId: Int!): Flow
 }
 
 type Subscription {
   onExecutorStatusChange(topicName: String): ExecutorStatus
+  onFlowStart(topicName: String): Flow
 }
 
 type Flow {
   id: Int!
-  flowTaskId: Int!
+  flowTaskId: Int
   name: String
   description: String
 }
@@ -35,7 +38,7 @@ type Executor {
   name: String
   description: String
   account: Account
-  status: ExecutorStatusCode!
+  status: ExecutorStatus
 }
 
 type Account {
@@ -52,6 +55,14 @@ type Task {
   name: String
   command: String
   flowTasks: [FlowTask]
+}
+
+type FlowTask {
+  id: Int!
+  taskId: Int!
+  flow: Flow
+  task: Task
+  successorsIds: [Int!]
 }
 
 type AccountOutput {
@@ -98,20 +109,4 @@ enum ExecutorStatusCode {
   ONLINE
   WORKING
   ERROR
-}
-
-type FlowTask {
-  id: Int!
-  taskId: Int!
-  flow: Flow
-  task: Task
-  predecessors: [StartingUp]
-  successors: [StartingUp]
-}
-
-type StartingUp {
-  successorId: Int!
-  predecessorId: Int!
-  successor: FlowTask
-  predecessor: FlowTask
 }

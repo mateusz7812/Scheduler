@@ -116,6 +116,11 @@ namespace SchedulerWebApplication
                         TaskId = task2.Entity.Id
                     });
 
+                    var flowTask3 = context.FlowTasks.Add(new FlowTask
+                    {
+                        TaskId = task1.Entity.Id
+                    });
+                    
                     context.ExecutorStatuses.Add(new ExecutorStatus{Date = 123, StatusCode = ExecutorStatusCode.Online, ExecutorId = 1});
                     context.ExecutorStatuses.Add(new ExecutorStatus{Date = 121, StatusCode = ExecutorStatusCode.Offline, ExecutorId = 1});
                     context.ExecutorStatuses.Add(new ExecutorStatus{Date = 124, StatusCode = ExecutorStatusCode.Working, ExecutorId = 1});
@@ -123,16 +128,22 @@ namespace SchedulerWebApplication
                     context.SaveChanges();
                     context.StartingUps.Add(new StartingUp
                     {
-                        PredecessorId = flowTask2.Entity.Id,
-                        SuccessorId = flowTask1.Entity.Id
+                        PredecessorId = 1,
+                        SuccessorId = 2
+                    });
+                    
+                    context.StartingUps.Add(new StartingUp
+                    {
+                        PredecessorId = 2,
+                        SuccessorId = 3
                     });
                     
                     context.Flows.Add(new Flow
                     {
-                        AccountId = 2,
+                        AccountId = 1,
                         Description = "testDescription",
                         Name = "testName",
-                        FlowTaskId = flowTask1.Entity.Id
+                        FlowTaskId = 1
                     });
                     
                     context.SaveChangesAsync();

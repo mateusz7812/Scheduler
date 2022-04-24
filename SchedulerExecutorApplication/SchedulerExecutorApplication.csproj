@@ -12,6 +12,7 @@
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.6.0" />
       <PackageReference Include="StrawberryShake.Transport.Http" Version="12.6.0" />
+      <PackageReference Include="StrawberryShake.Transport.WebSockets" Version="12.6.0" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     </ItemGroup>
 

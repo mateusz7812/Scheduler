@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HotChocolate;
 using Microsoft.EntityFrameworkCore;
 using SchedulerWebApplication.Models;
@@ -27,6 +28,28 @@ namespace SchedulerWebApplication
 
         public IQueryable<Task> GetTasks([Service]SchedulerContext context) =>
             context.Tasks;
+        
+        public IQueryable<FlowTask> GetFlowTasksForFlow([Service]SchedulerContext context, int flowId)
+        {
+            List<FlowTask> flowTasks = new List<FlowTask>();
+            var flow = context.Flows.First(t => t.Id == flowId);
+            if (flow.FlowTaskId is not null)
+            {
+                int i = 0;
+                flowTasks.Add(context.FlowTasks.Include(t => t.Successors).Include(t => t.Task).First(t => t.Id == flow.FlowTaskId));
+                do
+                {
+                    flowTasks.AddRange(flowTasks[i].Successors
+                        .Select(t => t.SuccessorId)
+                        .Where(id => !flowTasks.Any(f => f.Id == id))
+                        .Select(id =>
+                            context.FlowTasks.Include(t => t.Successors).Include(t => t.Task).First(t => t.Id == id)
+                        ));
+                    i++;
+                } while (i < flowTasks.Count);
 
+            }
+            return flowTasks.AsQueryable();
+        }
     }
 }

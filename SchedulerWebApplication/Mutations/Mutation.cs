@@ -65,5 +65,19 @@ namespace SchedulerWebApplication.Mutations
                 .ConfigureAwait(false);
             return savedStatus;
         }
+
+        public async Task<Flow> CreateFlowStart(
+            int flowId,
+            int executorId,
+            [Service] SchedulerContext context,
+            [Service] ITopicEventSender eventSender
+        )
+        {
+            Flow flow = context.Flows.First(f => f.Id == flowId);
+            await eventSender
+                .SendAsync($"executor{executorId}", flow)
+                .ConfigureAwait(false);
+            return flow;
+        }
     }
 }
