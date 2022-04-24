@@ -12,6 +12,6 @@ namespace SchedulerWebApplication.Models
         public int ExecutorId { get; set; }
         public ExecutorStatusCode StatusCode { get; set; }
         
-        public int Date { get; set; }
+        public long Date { get; set; }
     }
 }

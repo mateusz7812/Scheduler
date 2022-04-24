@@ -19,12 +19,12 @@ namespace SchedulerWebApplication.Models
         public virtual Account Account { get; set; }
         
         [NotMapped]
-        public ExecutorStatusCode Status
+        public ExecutorStatus Status
         {
             get
             {
-                return Statuses?.OrderByDescending(t => t.Date).FirstOrDefault()?.StatusCode ??
-                       ExecutorStatusCode.Offline;
+                return Statuses?.OrderByDescending(t => t.Date).FirstOrDefault() ??
+                       new ExecutorStatus {StatusCode = ExecutorStatusCode.Offline};
             }
             set{}
         }

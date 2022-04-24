@@ -20,7 +20,7 @@ namespace SchedulerWebApplication
         }
 
         public IQueryable<Executor> GetExecutorsForAccount([Service]SchedulerContext context, int accountId) =>
-            context.Executors.Where(t => t.AccountId == accountId);//.Include(b => b.Executors);
+            context.Executors.Where(t => t.AccountId == accountId).Include(b => b.Statuses);
         
         public IQueryable<Flow> GetFlowsForAccount([Service]SchedulerContext context, int accountId) =>
             context.Flows.Where(t => t.AccountId == accountId);//.Include(b => b.Executors);

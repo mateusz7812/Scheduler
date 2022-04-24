@@ -1,6 +1,7 @@
 ﻿schema {
   query: Query
   mutation: Mutation
+  subscription: Subscription
 }
 
 type Query {
@@ -12,23 +13,14 @@ type Query {
 }
 
 type Mutation {
-  createAccount(accountInput: AccountInput): AccountOutput
-  createExecutor(executorInput: ExecutorInput): Executor
+  createAccount(accountInput: CreateAccountInput): AccountOutput
+  createExecutor(executorInput: CreateExecutorInput): Executor
   createTask(taskInput: TaskInput): Task
+  createStatus(executorStatusInput: ExecutorStatusInput): ExecutorStatus
 }
 
-type Executor {
-  id: Int!
-  name: String
-  description: String
-  account: Account
-}
-
-type Account {
-  id: Int!
-  login: String
-  executors: [Executor]
-  flows: [Flow]
+type Subscription {
+  onExecutorStatusChange(topicName: String): ExecutorStatus
 }
 
 type Flow {
@@ -38,13 +30,27 @@ type Flow {
   description: String
 }
 
+type Executor {
+  id: Int!
+  name: String
+  description: String
+  account: Account
+  status: ExecutorStatusCode!
+}
+
+type Account {
+  id: Int!
+  login: String
+  executors: [Executor]
+  flows: [Flow]
+}
+
 type Task {
   id: Int!
   inputType: String
   outputType: String
   name: String
   command: String
-  firstTaskId: Int!
   flowTasks: [FlowTask]
 }
 
@@ -53,12 +59,12 @@ type AccountOutput {
   login: String
 }
 
-input AccountInput {
+input CreateAccountInput {
   login: String
   password: String
 }
 
-input ExecutorInput {
+input CreateExecutorInput {
   accountId: Int!
   name: String
   description: String
@@ -69,6 +75,29 @@ input TaskInput {
   outputType: String
   name: String
   command: String
+}
+
+type ExecutorStatus {
+  id: Int!
+  executorId: Int!
+  statusCode: ExecutorStatusCode!
+  date: Long!
+}
+
+input ExecutorStatusInput {
+  executorId: Int!
+  statusCode: ExecutorStatusCode!
+  date: Long!
+}
+
+"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long
+
+enum ExecutorStatusCode {
+  OFFLINE
+  ONLINE
+  WORKING
+  ERROR
 }
 
 type FlowTask {

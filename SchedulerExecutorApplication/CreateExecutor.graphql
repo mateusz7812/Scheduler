@@ -1,4 +1,4 @@
-﻿mutation CreateExecutor($executor: ExecutorInput){
+﻿mutation CreateExecutor($executor: CreateExecutorInput){
     createExecutor(executorInput: $executor){
         id,
         name

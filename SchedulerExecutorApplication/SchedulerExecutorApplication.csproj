@@ -19,4 +19,10 @@
       <Folder Include="Generated" />
     </ItemGroup>
 
+    <ItemGroup>
+      <GraphQL Update="CreateExecutorStatus.graphql2">
+        <Generator>MSBuild:Compile</Generator>
+      </GraphQL>
+    </ItemGroup>
+
 </Project>
