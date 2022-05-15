@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Subscriptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SchedulerWebApplication.Models;
 
 namespace SchedulerWebApplication.Mutations
@@ -34,12 +37,18 @@ namespace SchedulerWebApplication.Mutations
             [Service] SchedulerContext context
         )
         {
+            var vars = new Dictionary<string, string>();
+            foreach (var variable in taskInput.DefaultEnvironmentVariables)
+            {
+                vars.Add(variable.Key, variable.Value);
+            }
             var savedTask = (await context.Tasks.AddAsync( new Models.Task
             {
                 Command = taskInput.Command,
                 Name = taskInput.Name,
                 InputType = taskInput.InputType,
-                OutputType = taskInput.OutputType
+                OutputType = taskInput.OutputType,
+                DefaultEnvironmentVariables = vars
             })).Entity;
             await context.SaveChangesAsync();
             return savedTask;
@@ -78,6 +87,53 @@ namespace SchedulerWebApplication.Mutations
                 .SendAsync($"executor{executorId}", flow)
                 .ConfigureAwait(false);
             return flow;
+        }
+
+        public async Task<List<FlowTask>> CreateFlowTasks(
+            int flowTaskNumber,
+            [Service] SchedulerContext context)
+        {
+            var randomTaskId = context.Tasks.First().Id;
+            var flowTasks = Enumerable.Range(0, flowTaskNumber)
+                .Select(_ => 
+                    context.FlowTasks.Add(
+                        new FlowTask()
+                        {
+                            TaskId = randomTaskId
+                        }
+                    )
+                ).ToList();
+            await context.SaveChangesAsync();
+            return flowTasks.Select(e=> e.Entity).ToList();
+        }
+
+        public async Task<List<FlowTask>> UpdateFlowTasks(
+            List<UpdateFlowTaskInput> flowTasks,
+            [Service] SchedulerContext context)
+        {
+            foreach (var flowTask in flowTasks)
+            {
+                var updated = context.FlowTasks.Include(f=>f.Successors).First(f => f.Id == flowTask.Id);
+                if (flowTask.TaskId is not null)
+                    updated.TaskId = flowTask.TaskId.Value;
+                if (flowTask.EnvironmentVariables is not null)
+                {
+                    var vars = new Dictionary<string, string>();
+                    foreach (var variable in flowTask.EnvironmentVariables)
+                    {
+                        vars.Add(variable.Key, variable.Value);
+                    }
+                    updated.EnvironmentVariables = vars;
+                }
+                if(flowTask.SuccessorsIds is not null)
+                    foreach (var successorId in flowTask.SuccessorsIds)
+                    {
+                        if(updated.SuccessorsIds.All(id => id != successorId))
+                            context.StartingUps.Add(new StartingUp() {PredecessorId = updated.Id, SuccessorId = successorId});
+                    }
+            }
+            await context.SaveChangesAsync();
+            return flowTasks.Select(flowTask => context.FlowTasks.Include(f=>f.Successors).First(f => f.Id == flowTask.Id)).ToList();
         }
     }
 }

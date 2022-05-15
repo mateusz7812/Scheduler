@@ -1,0 +1,15 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.config
+/.idea/.idea.Scheduler/.idea
+/.vs/Scheduler
+/obj/berry
+/SchedulerExecutorApplication/obj
+/SchedulerExecutorApplication/bin/Debug
+/SchedulerWebApplication/bin/Debug/net5.0
+/SchedulerWebApplication/obj
+/SchedulerWebApplication/scheduler.db
+/SchedulerWebApplication/scheduler.db-shm
+/SchedulerWebApplication/scheduler.db-wal

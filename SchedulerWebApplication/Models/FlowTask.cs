@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using HotChocolate;
+using HotChocolate.Types;
 
 namespace SchedulerWebApplication.Models
 {
@@ -12,7 +13,9 @@ namespace SchedulerWebApplication.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int TaskId { get; set; }
-        
+
+        [GraphQLType(typeof(AnyType))]
+        public Dictionary<string, string> EnvironmentVariables { get; set; }
         public Flow Flow { get; set; }
         public Task Task { get; set; }
 

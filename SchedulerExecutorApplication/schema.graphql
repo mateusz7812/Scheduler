@@ -60,6 +60,7 @@ type Task {
 type FlowTask {
   id: Int!
   taskId: Int!
+  environmentVariables: Any
   flow: Flow
   task: Task
   successorsIds: [Int!]
@@ -100,6 +101,8 @@ input ExecutorStatusInput {
   statusCode: ExecutorStatusCode!
   date: Long!
 }
+
+scalar Any
 
 "The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
 scalar Long

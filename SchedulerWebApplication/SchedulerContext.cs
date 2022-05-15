@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using SchedulerWebApplication.Models;
 
 namespace SchedulerWebApplication
@@ -30,6 +31,18 @@ namespace SchedulerWebApplication
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<FlowTask>()
+                .Property(b => b.EnvironmentVariables)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
+            
+            modelBuilder.Entity<Task>()
+                .Property(b => b.DefaultEnvironmentVariables)
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
+
             modelBuilder.Entity<Account>()
                 .HasMany(t => t.Executors)
                 .WithOne(t => t.Account)

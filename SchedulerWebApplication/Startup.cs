@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -62,7 +63,7 @@ namespace SchedulerWebApplication
 
         private static void InitializeDatabase(IApplicationBuilder app)
         {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()!.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<SchedulerContext>();
                 if (context.Database.EnsureCreated())
@@ -93,32 +94,37 @@ namespace SchedulerWebApplication
                     {
                         InputType = typeof(string).ToString(),
                         OutputType = typeof(void).ToString(),
-                        Name = "Print",
-                        Command = "Write-Output"
+                        Name = "PrintText",
+                        Command = "Write-Output $Env:text",
+                        DefaultEnvironmentVariables = new Dictionary<string, string>(){{"text", "Hello world!"}}
                     });
                         
                     var task2 = context.Tasks.Add(new Task
                     {
                         InputType = typeof(string).ToString(),
                         OutputType = typeof(void).ToString(),
-                        Name = "Print2",
-                        Command = "Write-Output"
+                        Name = "PrintSum",
+                        Command = "[int]$Env:a + [int]$Env:b | Write-Output ",
+                        DefaultEnvironmentVariables = new Dictionary<string, string>(){{"a", "1"}, {"b", "2"}}
                     });
 
                     context.SaveChanges();
                     var flowTask1 = context.FlowTasks.Add(new FlowTask
                     {
-                        TaskId = task1.Entity.Id
+                        TaskId = task1.Entity.Id,
+                        EnvironmentVariables = new Dictionary<string, string>(){{"text", "test1"}}
                     });
                     
                     var flowTask2 = context.FlowTasks.Add(new FlowTask
                     {
-                        TaskId = task2.Entity.Id
+                        TaskId = task2.Entity.Id,
+                        EnvironmentVariables = new Dictionary<string, string>(){{"a", "4"}, {"b", "15"}}
                     });
 
                     var flowTask3 = context.FlowTasks.Add(new FlowTask
                     {
-                        TaskId = task1.Entity.Id
+                        TaskId = task1.Entity.Id,
+                        EnvironmentVariables = new Dictionary<string, string>(){{"text", "Hello test!"}}
                     });
                     
                     context.ExecutorStatuses.Add(new ExecutorStatus{Date = 123, StatusCode = ExecutorStatusCode.Online, ExecutorId = 1});

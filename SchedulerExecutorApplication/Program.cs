@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using SchedulerExecutorApplication.GraphQl;
 using StrawberryShake;
+using System.Text.Json;
 
 namespace SchedulerExecutorApplication
 {
@@ -72,12 +76,35 @@ namespace SchedulerExecutorApplication
 
             public void OnNext(IOperationResult<IOnFlowStartResult> value)
             {
-                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.Name} starting");
+                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.Name}: start");
                 SendStatus(ExecutorStatusCode.Working).Wait();
-                Console.WriteLine($"Executor working...");
-                Thread.Sleep(10000);
-                Console.WriteLine($"Flow end");
+                var flowTasksTask = _schedulerServer.GetFlowTasksForFlow.ExecuteAsync(value!.Data.OnFlowStart.Id);
+                flowTasksTask.Wait();
+                var result = flowTasksTask.Result;
+                foreach (var flowTask in result.Data?.FlowTasksForFlow!)
+                {
+                    //Console.WriteLine($"({flowTask.Task.Name}): start");
+                    var process = new Process();
+                    process.StartInfo.UseShellExecute = false;
+                    var environmentVariables = flowTask.EnvironmentVariables.RootElement.EnumerateArray().ToList();
+                    foreach (var environmentVariable in environmentVariables)
+                    {
+                        process.StartInfo.EnvironmentVariables[environmentVariable.GetProperty("key").ToString()] =
+                            environmentVariable.GetProperty("value").ToString();
+                    }
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.FileName = @"C:\windows\system32\windowspowershell\v1.0\powershell.exe";
+                    process.StartInfo.Arguments = "\""+flowTask.Task.Command+"; exit\"";
+                    process.Start();
+                    string s = process.StandardOutput.ReadLine()?.ReplaceLineEndings("");
+                    Console.WriteLine($"{flowTask.Task.Name}: " + s);
+                    process.WaitForExit();
+                    //Console.WriteLine($"({flowTask.Task.Name}): end");
+                    Thread.Sleep(1000);
+                }
+                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.Name}: end");
                 SendStatus(ExecutorStatusCode.Online).Wait();
+                Console.WriteLine("end");
             }
         }
         
