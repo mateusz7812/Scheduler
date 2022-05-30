@@ -12,11 +12,11 @@ namespace SchedulerWebApplication.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [GraphQLIgnore]
-        public int AccountId { get; set; }
+        public int PersonId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         
-        public virtual Account Account { get; set; }
+        public virtual Person Person { get; set; }
         
         [NotMapped]
         public ExecutorStatus Status
@@ -29,6 +29,10 @@ namespace SchedulerWebApplication.Models
             set{}
         }
 
-        [GraphQLIgnore] public ICollection<ExecutorStatus> Statuses { get; set; } = new List<ExecutorStatus>();
+        [GraphQLIgnore] 
+        public ICollection<ExecutorStatus> Statuses { get; set; } = new List<ExecutorStatus>();
+
+        [GraphQLIgnore]
+        public ICollection<FlowRun> FlowRuns { get; set; }
     }
 }

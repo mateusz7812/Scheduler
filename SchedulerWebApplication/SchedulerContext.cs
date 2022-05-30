@@ -14,12 +14,16 @@ namespace SchedulerWebApplication
             _loggerFactory = loggerFactory;
         }
         
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<LocalAccount> LocalAccounts { get; set; }
+        public DbSet<MicrosoftAccount> MicrosoftAccounts { get; set; }
+
         public DbSet<Executor> Executors { get; set; }
         
         public DbSet<ExecutorStatus> ExecutorStatuses { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Flow> Flows { get; set; }
+        public DbSet<FlowRun> FlowRuns { get; set; }
         public DbSet<FlowTask> FlowTasks { get; set; }
         public DbSet<StartingUp> StartingUps { get; set; }
 
@@ -43,20 +47,30 @@ namespace SchedulerWebApplication
                     v => JsonConvert.SerializeObject(v),
                     v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
 
-            modelBuilder.Entity<Account>()
+            modelBuilder.Entity<Person>()
                 .HasMany(t => t.Executors)
-                .WithOne(t => t.Account)
-                .HasForeignKey(t => t.AccountId);
+                .WithOne(t => t.Person)
+                .HasForeignKey(t => t.PersonId);
+
+            modelBuilder.Entity<Person>()
+                .HasMany<LocalAccount>()
+                .WithOne(t => t.Person)
+                .HasForeignKey(t => t.PersonId);
+
+            modelBuilder.Entity<Person>()
+                .HasMany<MicrosoftAccount>()
+                .WithOne(t => t.Person)
+                .HasForeignKey(t => t.PersonId);
 
             modelBuilder.Entity<Executor>()
                 .HasMany(t => t.Statuses)
                 .WithOne()
                 .HasForeignKey(t => t.ExecutorId);
             
-            modelBuilder.Entity<Account>()
+            modelBuilder.Entity<Person>()
                 .HasMany(t => t.Flows)
-                .WithOne(t => t.Account)
-                .HasForeignKey(t => t.AccountId);
+                .WithOne(t => t.Person)
+                .HasForeignKey(t => t.PersonId);
 
             modelBuilder.Entity<Task>()
                 .HasMany(t => t.FlowTasks)
@@ -80,8 +94,17 @@ namespace SchedulerWebApplication
                 .HasOne(t => t.Successor)
                 .WithMany(t => t.Predecessors)
                 .HasForeignKey(t => t.SuccessorId);
-            
-            
+
+            modelBuilder.Entity<FlowRun>()
+                .HasOne(f => f.Executor)
+                .WithMany(e => e.FlowRuns)
+                .HasForeignKey(f => f.ExecutorId);
+
+            modelBuilder.Entity<FlowRun>()
+                .HasOne(f => f.Flow)
+                .WithMany(e => e.FlowRuns)
+                .HasForeignKey(f => f.FlowId);
+
             /*modelBuilder.Entity<FlowTask>()
                 .HasMany<FlowTask>(t => t.Predecessors)
                 .WithMany(t => t.Successors)

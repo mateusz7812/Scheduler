@@ -7,17 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SchedulerWebApplication.Models
 {
-    public class Account
+    public class Person
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Login { get; set; }
-        
-        [GraphQLIgnore]
-        public string Password { get; set; }
 
+
+        [GraphQLIgnore]
         public virtual ICollection<Executor> Executors { get; set; }
+
+        [GraphQLIgnore] 
         public virtual ICollection<Flow> Flows { get; set; }
     }
 }

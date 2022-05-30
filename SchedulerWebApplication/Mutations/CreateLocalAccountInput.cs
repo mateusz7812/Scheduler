@@ -1,8 +1,8 @@
 ﻿namespace SchedulerWebApplication.Mutations
 {
-    public class CreateAccountInput
+    public class CreateLocalAccountInput
     {
-        public CreateAccountInput(string login, string password)
+        public CreateLocalAccountInput(string login, string password)
         {
             Login = login;
             Password = password;

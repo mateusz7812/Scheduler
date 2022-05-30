@@ -12,24 +12,34 @@ namespace SchedulerWebApplication.Mutations
 {
     public class Mutation
     {
-        public async Task<AccountOutput> CreateAccount(
-            CreateAccountInput accountInput,
+        public async Task<AccountOutput> CreateLocalAccount(
+            CreateLocalAccountInput accountInput,
             [Service] SchedulerContext context
             )
         {
-            var account = (await context.Accounts.AddAsync(new Account{Login = accountInput.Login, Password = accountInput.Password})).Entity;
+            var account = (await context.LocalAccounts.AddAsync(new LocalAccount { Person = new Person { Login = accountInput.Login }, Password = accountInput.Password })).Entity;
             await context.SaveChangesAsync();
-            return new AccountOutput(account.Id, account.Login);
+            return new AccountOutput(account.Person.Id, account.Person.Login);
         }
-        
+
+        public async Task<AccountOutput> CreateMicrosoftAccount(
+            CreateMicrosoftAccountInput accountInput,
+            [Service] SchedulerContext context
+            )
+        {
+            var account = (await context.MicrosoftAccounts.AddAsync(new MicrosoftAccount { Person = new Person { Login = accountInput.Login }, MicrosoftAccountId = accountInput.MicrosoftAccountId })).Entity;
+            await context.SaveChangesAsync();
+            return new AccountOutput(account.Person.Id, account.Person.Login);
+        }
+
         public async Task<Executor> CreateExecutor(
             CreateExecutorInput executorInput,
             [Service] SchedulerContext context
         )
         {
-            var executor = (await context.Executors.AddAsync(new Executor{Name = executorInput.Name, Description = executorInput.Description, AccountId = executorInput.AccountId})).Entity;
+            var executor = (await context.Executors.AddAsync(new Executor{Name = executorInput.Name, Description = executorInput.Description, PersonId = executorInput.AccountId})).Entity;
             await context.SaveChangesAsync();
-            return await context.Executors.Include(t => t.Account).FirstAsync(t => t.Id == executor.Id);
+            return await context.Executors.Include(t => t.Person).FirstAsync(t => t.Id == executor.Id);
         }
         
         public async Task<Models.Task> CreateTask(
@@ -53,7 +63,22 @@ namespace SchedulerWebApplication.Mutations
             await context.SaveChangesAsync();
             return savedTask;
         }
-        
+
+        public async Task<Flow> CreateFlow(
+            FlowInput flowInput,
+            [Service] SchedulerContext context
+        )
+        {
+            var savedFlow = (await context.Flows.AddAsync(new Flow
+            {
+                Name = flowInput.Name,
+                Description = flowInput.Description,
+                PersonId = flowInput.AccountId
+            })).Entity;
+            await context.SaveChangesAsync();
+            return savedFlow;
+        }
+
         public async Task<ExecutorStatus> CreateStatus(
             ExecutorStatusInput executorStatusInput,
             [Service] SchedulerContext context,
@@ -67,8 +92,8 @@ namespace SchedulerWebApplication.Mutations
                 StatusCode = executorStatusInput.StatusCode
             })).Entity;
             await context.SaveChangesAsync();
-            var accountId = context.Executors.Include(t => t.Account).First(t => t.Id == executorStatusInput.ExecutorId)
-                .Account.Id;
+            var accountId = context.Executors.Include(t => t.Person).First(t => t.Id == executorStatusInput.ExecutorId)
+                .Person.Id;
             await eventSender
                 .SendAsync($"account{accountId}" , savedStatus)
                 .ConfigureAwait(false);
@@ -83,6 +108,13 @@ namespace SchedulerWebApplication.Mutations
         )
         {
             Flow flow = context.Flows.First(f => f.Id == flowId);
+            context.FlowRuns.Add(new FlowRun
+            {
+                FlowId = flowId,
+                ExecutorId = executorId,
+                RunDate = DateTime.UtcNow.Ticks
+            });
+            await context.SaveChangesAsync();
             await eventSender
                 .SendAsync($"executor{executorId}", flow)
                 .ConfigureAwait(false);
@@ -134,6 +166,21 @@ namespace SchedulerWebApplication.Mutations
             }
             await context.SaveChangesAsync();
             return flowTasks.Select(flowTask => context.FlowTasks.Include(f=>f.Successors).First(f => f.Id == flowTask.Id)).ToList();
+        }
+
+        public async Task<Flow> UpdateFlow(
+            UpdateFlowInput flow,
+            [Service] SchedulerContext context)
+        {
+            var updated = context.Flows.First(f => f.Id == flow.Id);
+            if(flow.Name is not null)
+                updated.Name = flow.Name;
+            if (flow.Description is not null)
+                updated.Description = flow.Description;
+            if (flow.FlowTaskId is not null)
+                updated.FlowTaskId = flow.FlowTaskId;
+            await context.SaveChangesAsync();
+            return updated;
         }
     }
 }

@@ -68,25 +68,42 @@ namespace SchedulerWebApplication
                 var context = serviceScope.ServiceProvider.GetRequiredService<SchedulerContext>();
                 if (context.Database.EnsureCreated())
                 {
-                    var account = new Account { Login = "testLogin", Password = "testPassword"};
+                    var account = new Person { Login = "testLogin"};
+
+                    context.LocalAccounts.Add(new LocalAccount 
+                    { 
+                        Person = account, 
+                        Password = "testPassword" 
+                    });
+
+                    context.MicrosoftAccounts.Add(new MicrosoftAccount
+                    {
+                        Person = account,
+                        MicrosoftAccountId = Guid.Parse("b2c4e305-63ed-431b-baef-bb051f70d749")
+                    });
                     
                     context.Executors.Add(new Executor
                     {
-                        Account = account,
+                        Person = account,
                         Name = "testName",
                         Description = "testDescription"
                     });
                     
                     context.Executors.Add(new Executor
                     {
-                        Account = account,
+                        Person = account,
                         Name = "testName2",
                         Description = "testDescription2"
                     });
                     
-                    context.Accounts.Add(new Account
+                    var person = new Person
                     {
                         Login = "testLogin2",
+                    };
+
+                    context.LocalAccounts.Add(new LocalAccount
+                    {
+                        Person = person,
                         Password = "testPassword2"
                     });
 
@@ -146,12 +163,35 @@ namespace SchedulerWebApplication
                     
                     context.Flows.Add(new Flow
                     {
-                        AccountId = 1,
+                        PersonId = 1,
                         Description = "testDescription",
                         Name = "testName",
                         FlowTaskId = 1
                     });
                     
+                    context.SaveChangesAsync();
+
+                    int flowId = context.Flows.First().Id;
+                    int executorId = context.Executors.First().Id;
+                    context.FlowRuns.Add(new FlowRun
+                    {
+                        RunDate = new DateTime(2012, 10, 20, 10, 15, 21).Ticks,
+                        FlowId = flowId,
+                        ExecutorId = executorId
+                    });
+                    context.FlowRuns.Add(new FlowRun
+                    {
+                        RunDate = new DateTime(2012, 10, 20, 11, 15, 21).Ticks,
+                        FlowId = flowId,
+                        ExecutorId = executorId
+                    });
+                    context.FlowRuns.Add(new FlowRun
+                    {
+                        RunDate = new DateTime(2012, 10, 20, 11, 30, 21).Ticks,
+                        FlowId = flowId,
+                        ExecutorId = executorId
+                    });
+
                     context.SaveChangesAsync();
                 }
             }
