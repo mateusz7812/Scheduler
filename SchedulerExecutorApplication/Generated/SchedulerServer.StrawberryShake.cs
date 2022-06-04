@@ -17,6 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => new global::SchedulerExecutorApplication.GraphQl.State.SchedulerServerStoreAccessor(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityStore>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IEntityIdSerializer>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory>>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp))));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.CreateExecutorMutation>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.CreateExecutorStatusMutation>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.CreateFlowTaskStatusMutation>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.GetAccountsQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.GetFlowTasksForFlowQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.GetLoginQuery>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<ClientServiceProvider>(sp)));
@@ -42,12 +43,14 @@ namespace Microsoft.Extensions.DependencyInjection
             });
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.ExecutorEntity, global::SchedulerExecutorApplication.GraphQl.CreateExecutor_CreateExecutor_Executor>, global::SchedulerExecutorApplication.GraphQl.State.CreateExecutor_CreateExecutor_ExecutorFromExecutorEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.ExecutorStatusEntity, global::SchedulerExecutorApplication.GraphQl.CreateExecutorStatus_CreateStatus_ExecutorStatus>, global::SchedulerExecutorApplication.GraphQl.State.CreateExecutorStatus_CreateStatus_ExecutorStatusFromExecutorStatusEntityMapper>(services);
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, global::SchedulerExecutorApplication.GraphQl.GetAccounts_Accounts_Account>, global::SchedulerExecutorApplication.GraphQl.State.GetAccounts_Accounts_AccountFromAccountEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity, global::SchedulerExecutorApplication.GraphQl.CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus>, global::SchedulerExecutorApplication.GraphQl.State.CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, global::SchedulerExecutorApplication.GraphQl.GetAccounts_Accounts_Person>, global::SchedulerExecutorApplication.GraphQl.State.GetAccounts_Accounts_PersonFromPersonEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowTaskEntity, global::SchedulerExecutorApplication.GraphQl.GetFlowTasksForFlow_FlowTasksForFlow_FlowTask>, global::SchedulerExecutorApplication.GraphQl.State.GetFlowTasksForFlow_FlowTasksForFlow_FlowTaskFromFlowTaskEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.TaskEntity, global::SchedulerExecutorApplication.GraphQl.GetFlowTasksForFlow_FlowTasksForFlow_Task_Task>, global::SchedulerExecutorApplication.GraphQl.State.GetFlowTasksForFlow_FlowTasksForFlow_Task_TaskFromTaskEntityMapper>(services);
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, global::SchedulerExecutorApplication.GraphQl.GetLogin_Login_Account>, global::SchedulerExecutorApplication.GraphQl.State.GetLogin_Login_AccountFromAccountEntityMapper>(services);
-            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowEntity, global::SchedulerExecutorApplication.GraphQl.OnFlowStart_OnFlowStart_Flow>, global::SchedulerExecutorApplication.GraphQl.State.OnFlowStart_OnFlowStart_FlowFromFlowEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, global::SchedulerExecutorApplication.GraphQl.GetLogin_LocalLogin_Person>, global::SchedulerExecutorApplication.GraphQl.State.GetLogin_LocalLogin_PersonFromPersonEntityMapper>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity, global::SchedulerExecutorApplication.GraphQl.OnFlowStart_OnFlowStart_FlowRun>, global::SchedulerExecutorApplication.GraphQl.State.OnFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::SchedulerExecutorApplication.GraphQl.ExecutorStatusCodeSerializer>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusCodeSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.StringSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.BooleanSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.ByteSerializer>(services);
@@ -66,6 +69,7 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::StrawberryShake.Serialization.JsonSerializer>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::SchedulerExecutorApplication.GraphQl.CreateExecutorInputInputValueFormatter>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::SchedulerExecutorApplication.GraphQl.ExecutorStatusInputInputValueFormatter>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializer, global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInputInputValueFormatter>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.Serialization.ISerializerResolver>(services, sp => new global::StrawberryShake.Serialization.SerializerResolver(global::System.Linq.Enumerable.Concat(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(parentServices), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::System.Collections.Generic.IEnumerable<global::StrawberryShake.Serialization.ISerializer>>(sp))));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.ICreateExecutorResult>, global::SchedulerExecutorApplication.GraphQl.State.CreateExecutorResultFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.ICreateExecutorResult>>(sp));
@@ -81,6 +85,13 @@ namespace Microsoft.Extensions.DependencyInjection
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::SchedulerExecutorApplication.GraphQl.CreateExecutorStatusMutation>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusMutation>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.CreateExecutorStatusMutation>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult>, global::SchedulerExecutorApplication.GraphQl.State.CreateFlowTaskStatusResultFactory>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult>>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusMutation>(sp));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult>, global::SchedulerExecutorApplication.GraphQl.State.CreateFlowTaskStatusBuilder>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationExecutor<global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult>>(services, sp => new global::StrawberryShake.OperationExecutor<global::System.Text.Json.JsonDocument, global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult>(global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.Transport.Http.IHttpConnection>(sp), () => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult>>(sp), global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationStore>(sp), strategy));
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::SchedulerExecutorApplication.GraphQl.CreateFlowTaskStatusMutation>(services);
+            global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusMutation>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.CreateFlowTaskStatusMutation>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.IGetAccountsResult>, global::SchedulerExecutorApplication.GraphQl.State.GetAccountsResultFactory>(services);
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationResultDataFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.IGetAccountsResult>>(sp));
             global::Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton<global::StrawberryShake.IOperationRequestFactory>(services, sp => global::Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService<global::SchedulerExecutorApplication.GraphQl.IGetAccountsQuery>(sp));
@@ -438,6 +449,149 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatusResult : global::System.IEquatable<CreateFlowTaskStatusResult>, ICreateFlowTaskStatusResult
+    {
+        public CreateFlowTaskStatusResult(global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatus_CreateFlowTaskStatus? createFlowTaskStatus)
+        {
+            CreateFlowTaskStatus = createFlowTaskStatus;
+        }
+
+        public global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatus_CreateFlowTaskStatus? CreateFlowTaskStatus { get; }
+
+        public virtual global::System.Boolean Equals(CreateFlowTaskStatusResult? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (((CreateFlowTaskStatus is null && other.CreateFlowTaskStatus is null) || CreateFlowTaskStatus != null && CreateFlowTaskStatus.Equals(other.CreateFlowTaskStatus)));
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((CreateFlowTaskStatusResult)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                if (CreateFlowTaskStatus != null)
+                {
+                    hash ^= 397 * CreateFlowTaskStatus.GetHashCode();
+                }
+
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus : global::System.IEquatable<CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus>, ICreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus
+    {
+        public CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus(global::System.Int32 id)
+        {
+            Id = id;
+        }
+
+        public global::System.Int32 Id { get; }
+
+        public virtual global::System.Boolean Equals(CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (Id == other.Id);
+        }
+
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus)obj);
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * Id.GetHashCode();
+                return hash;
+            }
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ICreateFlowTaskStatusResult
+    {
+        public global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatus_CreateFlowTaskStatus? CreateFlowTaskStatus { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ICreateFlowTaskStatus_CreateFlowTaskStatus
+    {
+        public global::System.Int32 Id { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ICreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus : ICreateFlowTaskStatus_CreateFlowTaskStatus
+    {
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class GetAccountsResult : global::System.IEquatable<GetAccountsResult>, IGetAccountsResult
     {
         public GetAccountsResult(global::System.Collections.Generic.IReadOnlyList<global::SchedulerExecutorApplication.GraphQl.IGetAccounts_Accounts?>? accounts)
@@ -509,16 +663,16 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class GetAccounts_Accounts_Account : global::System.IEquatable<GetAccounts_Accounts_Account>, IGetAccounts_Accounts_Account
+    public partial class GetAccounts_Accounts_Person : global::System.IEquatable<GetAccounts_Accounts_Person>, IGetAccounts_Accounts_Person
     {
-        public GetAccounts_Accounts_Account(global::System.Int32 id)
+        public GetAccounts_Accounts_Person(global::System.Int32 id)
         {
             Id = id;
         }
 
         public global::System.Int32 Id { get; }
 
-        public virtual global::System.Boolean Equals(GetAccounts_Accounts_Account? other)
+        public virtual global::System.Boolean Equals(GetAccounts_Accounts_Person? other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -555,7 +709,7 @@ namespace SchedulerExecutorApplication.GraphQl
                 return false;
             }
 
-            return Equals((GetAccounts_Accounts_Account)obj);
+            return Equals((GetAccounts_Accounts_Person)obj);
         }
 
         public override global::System.Int32 GetHashCode()
@@ -582,7 +736,7 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial interface IGetAccounts_Accounts_Account : IGetAccounts_Accounts
+    public partial interface IGetAccounts_Accounts_Person : IGetAccounts_Accounts
     {
     }
 
@@ -877,12 +1031,12 @@ namespace SchedulerExecutorApplication.GraphQl
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class GetLoginResult : global::System.IEquatable<GetLoginResult>, IGetLoginResult
     {
-        public GetLoginResult(global::SchedulerExecutorApplication.GraphQl.IGetLogin_Login? login)
+        public GetLoginResult(global::SchedulerExecutorApplication.GraphQl.IGetLogin_LocalLogin? localLogin)
         {
-            Login = login;
+            LocalLogin = localLogin;
         }
 
-        public global::SchedulerExecutorApplication.GraphQl.IGetLogin_Login? Login { get; }
+        public global::SchedulerExecutorApplication.GraphQl.IGetLogin_LocalLogin? LocalLogin { get; }
 
         public virtual global::System.Boolean Equals(GetLoginResult? other)
         {
@@ -901,7 +1055,7 @@ namespace SchedulerExecutorApplication.GraphQl
                 return false;
             }
 
-            return (((Login is null && other.Login is null) || Login != null && Login.Equals(other.Login)));
+            return (((LocalLogin is null && other.LocalLogin is null) || LocalLogin != null && LocalLogin.Equals(other.LocalLogin)));
         }
 
         public override global::System.Boolean Equals(global::System.Object? obj)
@@ -929,9 +1083,9 @@ namespace SchedulerExecutorApplication.GraphQl
             unchecked
             {
                 int hash = 5;
-                if (Login != null)
+                if (LocalLogin != null)
                 {
-                    hash ^= 397 * Login.GetHashCode();
+                    hash ^= 397 * LocalLogin.GetHashCode();
                 }
 
                 return hash;
@@ -940,9 +1094,9 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class GetLogin_Login_Account : global::System.IEquatable<GetLogin_Login_Account>, IGetLogin_Login_Account
+    public partial class GetLogin_LocalLogin_Person : global::System.IEquatable<GetLogin_LocalLogin_Person>, IGetLogin_LocalLogin_Person
     {
-        public GetLogin_Login_Account(global::System.Int32 id, global::System.String? login)
+        public GetLogin_LocalLogin_Person(global::System.Int32 id, global::System.String? login)
         {
             Id = id;
             Login = login;
@@ -952,7 +1106,7 @@ namespace SchedulerExecutorApplication.GraphQl
 
         public global::System.String? Login { get; }
 
-        public virtual global::System.Boolean Equals(GetLogin_Login_Account? other)
+        public virtual global::System.Boolean Equals(GetLogin_LocalLogin_Person? other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -989,7 +1143,7 @@ namespace SchedulerExecutorApplication.GraphQl
                 return false;
             }
 
-            return Equals((GetLogin_Login_Account)obj);
+            return Equals((GetLogin_LocalLogin_Person)obj);
         }
 
         public override global::System.Int32 GetHashCode()
@@ -1011,11 +1165,11 @@ namespace SchedulerExecutorApplication.GraphQl
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial interface IGetLoginResult
     {
-        public global::SchedulerExecutorApplication.GraphQl.IGetLogin_Login? Login { get; }
+        public global::SchedulerExecutorApplication.GraphQl.IGetLogin_LocalLogin? LocalLogin { get; }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial interface IGetLogin_Login
+    public partial interface IGetLogin_LocalLogin
     {
         public global::System.Int32 Id { get; }
 
@@ -1023,7 +1177,7 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial interface IGetLogin_Login_Account : IGetLogin_Login
+    public partial interface IGetLogin_LocalLogin_Person : IGetLogin_LocalLogin
     {
     }
 
@@ -1093,19 +1247,22 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class OnFlowStart_OnFlowStart_Flow : global::System.IEquatable<OnFlowStart_OnFlowStart_Flow>, IOnFlowStart_OnFlowStart_Flow
+    public partial class OnFlowStart_OnFlowStart_FlowRun : global::System.IEquatable<OnFlowStart_OnFlowStart_FlowRun>, IOnFlowStart_OnFlowStart_FlowRun
     {
-        public OnFlowStart_OnFlowStart_Flow(global::System.Int32 id, global::System.String? name)
+        public OnFlowStart_OnFlowStart_FlowRun(global::System.Int32 id, global::System.Int32 flowId, global::System.Int32 executorId)
         {
             Id = id;
-            Name = name;
+            FlowId = flowId;
+            ExecutorId = executorId;
         }
 
         public global::System.Int32 Id { get; }
 
-        public global::System.String? Name { get; }
+        public global::System.Int32 FlowId { get; }
 
-        public virtual global::System.Boolean Equals(OnFlowStart_OnFlowStart_Flow? other)
+        public global::System.Int32 ExecutorId { get; }
+
+        public virtual global::System.Boolean Equals(OnFlowStart_OnFlowStart_FlowRun? other)
         {
             if (ReferenceEquals(null, other))
             {
@@ -1122,7 +1279,7 @@ namespace SchedulerExecutorApplication.GraphQl
                 return false;
             }
 
-            return (Id == other.Id) && ((Name is null && other.Name is null) || Name != null && Name.Equals(other.Name));
+            return (Id == other.Id) && FlowId == other.FlowId && ExecutorId == other.ExecutorId;
         }
 
         public override global::System.Boolean Equals(global::System.Object? obj)
@@ -1142,7 +1299,7 @@ namespace SchedulerExecutorApplication.GraphQl
                 return false;
             }
 
-            return Equals((OnFlowStart_OnFlowStart_Flow)obj);
+            return Equals((OnFlowStart_OnFlowStart_FlowRun)obj);
         }
 
         public override global::System.Int32 GetHashCode()
@@ -1151,11 +1308,8 @@ namespace SchedulerExecutorApplication.GraphQl
             {
                 int hash = 5;
                 hash ^= 397 * Id.GetHashCode();
-                if (Name != null)
-                {
-                    hash ^= 397 * Name.GetHashCode();
-                }
-
+                hash ^= 397 * FlowId.GetHashCode();
+                hash ^= 397 * ExecutorId.GetHashCode();
                 return hash;
             }
         }
@@ -1172,11 +1326,13 @@ namespace SchedulerExecutorApplication.GraphQl
     {
         public global::System.Int32 Id { get; }
 
-        public global::System.String? Name { get; }
+        public global::System.Int32 FlowId { get; }
+
+        public global::System.Int32 ExecutorId { get; }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial interface IOnFlowStart_OnFlowStart_Flow : IOnFlowStart_OnFlowStart
+    public partial interface IOnFlowStart_OnFlowStart_FlowRun : IOnFlowStart_OnFlowStart
     {
     }
 
@@ -1519,6 +1675,226 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class FlowTaskStatusInputInputValueFormatter : global::StrawberryShake.Serialization.IInputObjectFormatter
+    {
+        private global::StrawberryShake.Serialization.IInputValueFormatter _intFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _flowTaskStatusCodeFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _stringFormatter = default !;
+        private global::StrawberryShake.Serialization.IInputValueFormatter _longFormatter = default !;
+        public global::System.String TypeName => "FlowTaskStatusInput";
+        public void Initialize(global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _intFormatter = serializerResolver.GetInputValueFormatter("Int");
+            _flowTaskStatusCodeFormatter = serializerResolver.GetInputValueFormatter("FlowTaskStatusCode");
+            _stringFormatter = serializerResolver.GetInputValueFormatter("String");
+            _longFormatter = serializerResolver.GetInputValueFormatter("Long");
+        }
+
+        public global::System.Object? Format(global::System.Object? runtimeValue)
+        {
+            if (runtimeValue is null)
+            {
+                return null;
+            }
+
+            var input = runtimeValue as global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInput;
+            var inputInfo = runtimeValue as global::SchedulerExecutorApplication.GraphQl.State.IFlowTaskStatusInputInfo;
+            if (input is null || inputInfo is null)
+            {
+                throw new global::System.ArgumentException(nameof(runtimeValue));
+            }
+
+            var fields = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>>();
+            if (inputInfo.IsFlowRunIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("flowRunId", FormatFlowRunId(input.FlowRunId)));
+            }
+
+            if (inputInfo.IsFlowTaskIdSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("flowTaskId", FormatFlowTaskId(input.FlowTaskId)));
+            }
+
+            if (inputInfo.IsStatusCodeSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("statusCode", FormatStatusCode(input.StatusCode)));
+            }
+
+            if (inputInfo.IsDescriptionSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("description", FormatDescription(input.Description)));
+            }
+
+            if (inputInfo.IsDateSet)
+            {
+                fields.Add(new global::System.Collections.Generic.KeyValuePair<global::System.String, global::System.Object?>("date", FormatDate(input.Date)));
+            }
+
+            return fields;
+        }
+
+        private global::System.Object? FormatFlowRunId(global::System.Int32 input)
+        {
+            return _intFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatFlowTaskId(global::System.Int32 input)
+        {
+            return _intFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatStatusCode(global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusCode input)
+        {
+            return _flowTaskStatusCodeFormatter.Format(input);
+        }
+
+        private global::System.Object? FormatDescription(global::System.String? input)
+        {
+            if (input is null)
+            {
+                return input;
+            }
+            else
+            {
+                return _stringFormatter.Format(input);
+            }
+        }
+
+        private global::System.Object? FormatDate(global::System.Int64 input)
+        {
+            return _longFormatter.Format(input);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class FlowTaskStatusInput : global::SchedulerExecutorApplication.GraphQl.State.IFlowTaskStatusInputInfo, global::System.IEquatable<FlowTaskStatusInput>
+    {
+        public override global::System.Boolean Equals(global::System.Object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((FlowTaskStatusInput)obj);
+        }
+
+        public virtual global::System.Boolean Equals(FlowTaskStatusInput? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return (FlowRunId == other.FlowRunId) && FlowTaskId == other.FlowTaskId && StatusCode.Equals(other.StatusCode) && ((Description is null && other.Description is null) || Description != null && Description.Equals(other.Description)) && Date == other.Date;
+        }
+
+        public override global::System.Int32 GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 5;
+                hash ^= 397 * FlowRunId.GetHashCode();
+                hash ^= 397 * FlowTaskId.GetHashCode();
+                hash ^= 397 * StatusCode.GetHashCode();
+                if (Description != null)
+                {
+                    hash ^= 397 * Description.GetHashCode();
+                }
+
+                hash ^= 397 * Date.GetHashCode();
+                return hash;
+            }
+        }
+
+        private global::System.Int32 _value_flowRunId;
+        private global::System.Boolean _set_flowRunId;
+        private global::System.Int32 _value_flowTaskId;
+        private global::System.Boolean _set_flowTaskId;
+        private global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusCode _value_statusCode;
+        private global::System.Boolean _set_statusCode;
+        private global::System.String? _value_description;
+        private global::System.Boolean _set_description;
+        private global::System.Int64 _value_date;
+        private global::System.Boolean _set_date;
+        public global::System.Int32 FlowRunId
+        {
+            get => _value_flowRunId;
+            set
+            {
+                _set_flowRunId = true;
+                _value_flowRunId = value;
+            }
+        }
+
+        global::System.Boolean global::SchedulerExecutorApplication.GraphQl.State.IFlowTaskStatusInputInfo.IsFlowRunIdSet => _set_flowRunId;
+        public global::System.Int32 FlowTaskId
+        {
+            get => _value_flowTaskId;
+            set
+            {
+                _set_flowTaskId = true;
+                _value_flowTaskId = value;
+            }
+        }
+
+        global::System.Boolean global::SchedulerExecutorApplication.GraphQl.State.IFlowTaskStatusInputInfo.IsFlowTaskIdSet => _set_flowTaskId;
+        public global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusCode StatusCode
+        {
+            get => _value_statusCode;
+            set
+            {
+                _set_statusCode = true;
+                _value_statusCode = value;
+            }
+        }
+
+        global::System.Boolean global::SchedulerExecutorApplication.GraphQl.State.IFlowTaskStatusInputInfo.IsStatusCodeSet => _set_statusCode;
+        public global::System.String? Description
+        {
+            get => _value_description;
+            set
+            {
+                _set_description = true;
+                _value_description = value;
+            }
+        }
+
+        global::System.Boolean global::SchedulerExecutorApplication.GraphQl.State.IFlowTaskStatusInputInfo.IsDescriptionSet => _set_description;
+        public global::System.Int64 Date
+        {
+            get => _value_date;
+            set
+            {
+                _set_date = true;
+                _value_date = value;
+            }
+        }
+
+        global::System.Boolean global::SchedulerExecutorApplication.GraphQl.State.IFlowTaskStatusInputInfo.IsDateSet => _set_date;
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public enum ExecutorStatusCode
     {
         Offline,
@@ -1535,18 +1911,61 @@ namespace SchedulerExecutorApplication.GraphQl
         {
             return serializedValue switch
             {
-            "OFFLINE" => ExecutorStatusCode.Offline, "ONLINE" => ExecutorStatusCode.Online, "WORKING" => ExecutorStatusCode.Working, "ERROR" => ExecutorStatusCode.Error, _ => throw new global::StrawberryShake.GraphQLClientException()}
-
-            ;
+                "OFFLINE" => ExecutorStatusCode.Offline,
+                "ONLINE" => ExecutorStatusCode.Online,
+                "WORKING" => ExecutorStatusCode.Working,
+                "ERROR" => ExecutorStatusCode.Error,
+                _ => throw new global::StrawberryShake.GraphQLClientException()};
         }
 
         public global::System.Object Format(global::System.Object? runtimeValue)
         {
             return runtimeValue switch
             {
-            ExecutorStatusCode.Offline => "OFFLINE", ExecutorStatusCode.Online => "ONLINE", ExecutorStatusCode.Working => "WORKING", ExecutorStatusCode.Error => "ERROR", _ => throw new global::StrawberryShake.GraphQLClientException()}
+                ExecutorStatusCode.Offline => "OFFLINE",
+                ExecutorStatusCode.Online => "ONLINE",
+                ExecutorStatusCode.Working => "WORKING",
+                ExecutorStatusCode.Error => "ERROR",
+                _ => throw new global::StrawberryShake.GraphQLClientException()};
+        }
+    }
 
-            ;
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public enum FlowTaskStatusCode
+    {
+        Wait,
+        Cancelled,
+        Processing,
+        Done,
+        Error
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class FlowTaskStatusCodeSerializer : global::StrawberryShake.Serialization.IInputValueFormatter, global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, FlowTaskStatusCode>
+    {
+        public global::System.String TypeName => "FlowTaskStatusCode";
+        public FlowTaskStatusCode Parse(global::System.String serializedValue)
+        {
+            return serializedValue switch
+            {
+                "WAIT" => FlowTaskStatusCode.Wait,
+                "CANCELLED" => FlowTaskStatusCode.Cancelled,
+                "PROCESSING" => FlowTaskStatusCode.Processing,
+                "DONE" => FlowTaskStatusCode.Done,
+                "ERROR" => FlowTaskStatusCode.Error,
+                _ => throw new global::StrawberryShake.GraphQLClientException()};
+        }
+
+        public global::System.Object Format(global::System.Object? runtimeValue)
+        {
+            return runtimeValue switch
+            {
+                FlowTaskStatusCode.Wait => "WAIT",
+                FlowTaskStatusCode.Cancelled => "CANCELLED",
+                FlowTaskStatusCode.Processing => "PROCESSING",
+                FlowTaskStatusCode.Done => "DONE",
+                FlowTaskStatusCode.Error => "ERROR",
+                _ => throw new global::StrawberryShake.GraphQLClientException()};
         }
     }
 
@@ -1802,13 +2221,137 @@ namespace SchedulerExecutorApplication.GraphQl
     }
 
     /// <summary>
+    /// Represents the operation service of the CreateFlowTaskStatus GraphQL operation
+    /// <code>
+    /// mutation CreateFlowTaskStatus($flowTaskStatusInput: FlowTaskStatusInput) {
+    ///   createFlowTaskStatus(flowTaskStatusInput: $flowTaskStatusInput) {
+    ///     __typename
+    ///     id
+    ///     ... on FlowTaskStatus {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatusMutationDocument : global::StrawberryShake.IDocument
+    {
+        private CreateFlowTaskStatusMutationDocument()
+        {
+        }
+
+        public static CreateFlowTaskStatusMutationDocument Instance { get; } = new CreateFlowTaskStatusMutationDocument();
+        public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Mutation;
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x6d, 0x75, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x46, 0x6c, 0x6f, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x28, 0x24, 0x66, 0x6c, 0x6f, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x3a, 0x20, 0x46, 0x6c, 0x6f, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x29, 0x20, 0x7b, 0x20, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x46, 0x6c, 0x6f, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x28, 0x66, 0x6c, 0x6f, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x3a, 0x20, 0x24, 0x66, 0x6c, 0x6f, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x46, 0x6c, 0x6f, 0x77, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "31bd20dbdd1c618b3d837ff63430a027");
+        public override global::System.String ToString()
+        {
+#if NETSTANDARD2_0
+        return global::System.Text.Encoding.UTF8.GetString(Body.ToArray());
+#else
+            return global::System.Text.Encoding.UTF8.GetString(Body);
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the CreateFlowTaskStatus GraphQL operation
+    /// <code>
+    /// mutation CreateFlowTaskStatus($flowTaskStatusInput: FlowTaskStatusInput) {
+    ///   createFlowTaskStatus(flowTaskStatusInput: $flowTaskStatusInput) {
+    ///     __typename
+    ///     id
+    ///     ... on FlowTaskStatus {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatusMutation : global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusMutation
+    {
+        private readonly global::StrawberryShake.IOperationExecutor<ICreateFlowTaskStatusResult> _operationExecutor;
+        private readonly global::StrawberryShake.Serialization.IInputValueFormatter _flowTaskStatusInputFormatter;
+        public CreateFlowTaskStatusMutation(global::StrawberryShake.IOperationExecutor<ICreateFlowTaskStatusResult> operationExecutor, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _operationExecutor = operationExecutor ?? throw new global::System.ArgumentNullException(nameof(operationExecutor));
+            _flowTaskStatusInputFormatter = serializerResolver.GetInputValueFormatter("FlowTaskStatusInput");
+        }
+
+        global::System.Type global::StrawberryShake.IOperationRequestFactory.ResultType => typeof(ICreateFlowTaskStatusResult);
+        public async global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<ICreateFlowTaskStatusResult>> ExecuteAsync(global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInput? flowTaskStatusInput, global::System.Threading.CancellationToken cancellationToken = default)
+        {
+            var request = CreateRequest(flowTaskStatusInput);
+            return await _operationExecutor.ExecuteAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        public global::System.IObservable<global::StrawberryShake.IOperationResult<ICreateFlowTaskStatusResult>> Watch(global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInput? flowTaskStatusInput, global::StrawberryShake.ExecutionStrategy? strategy = null)
+        {
+            var request = CreateRequest(flowTaskStatusInput);
+            return _operationExecutor.Watch(request, strategy);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInput? flowTaskStatusInput)
+        {
+            var variables = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>();
+            variables.Add("flowTaskStatusInput", FormatFlowTaskStatusInput(flowTaskStatusInput));
+            return CreateRequest(variables);
+        }
+
+        private global::StrawberryShake.OperationRequest CreateRequest(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return new global::StrawberryShake.OperationRequest(id: CreateFlowTaskStatusMutationDocument.Instance.Hash.Value, name: "CreateFlowTaskStatus", document: CreateFlowTaskStatusMutationDocument.Instance, strategy: global::StrawberryShake.RequestStrategy.Default, variables: variables);
+        }
+
+        private global::System.Object? FormatFlowTaskStatusInput(global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInput? value)
+        {
+            if (value is null)
+            {
+                return value;
+            }
+            else
+            {
+                return _flowTaskStatusInputFormatter.Format(value);
+            }
+        }
+
+        global::StrawberryShake.OperationRequest global::StrawberryShake.IOperationRequestFactory.Create(global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Object?>? variables)
+        {
+            return CreateRequest(variables!);
+        }
+    }
+
+    /// <summary>
+    /// Represents the operation service of the CreateFlowTaskStatus GraphQL operation
+    /// <code>
+    /// mutation CreateFlowTaskStatus($flowTaskStatusInput: FlowTaskStatusInput) {
+    ///   createFlowTaskStatus(flowTaskStatusInput: $flowTaskStatusInput) {
+    ///     __typename
+    ///     id
+    ///     ... on FlowTaskStatus {
+    ///       id
+    ///     }
+    ///   }
+    /// }
+    /// </code>
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial interface ICreateFlowTaskStatusMutation : global::StrawberryShake.IOperationRequestFactory
+    {
+        global::System.Threading.Tasks.Task<global::StrawberryShake.IOperationResult<ICreateFlowTaskStatusResult>> ExecuteAsync(global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInput? flowTaskStatusInput, global::System.Threading.CancellationToken cancellationToken = default);
+        global::System.IObservable<global::StrawberryShake.IOperationResult<ICreateFlowTaskStatusResult>> Watch(global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusInput? flowTaskStatusInput, global::StrawberryShake.ExecutionStrategy? strategy = null);
+    }
+
+    /// <summary>
     /// Represents the operation service of the GetAccounts GraphQL operation
     /// <code>
     /// query GetAccounts {
     ///   accounts {
     ///     __typename
     ///     id
-    ///     ... on Account {
+    ///     ... on Person {
     ///       id
     ///     }
     ///   }
@@ -1824,8 +2367,8 @@ namespace SchedulerExecutorApplication.GraphQl
 
         public static GetAccountsQueryDocument Instance { get; } = new GetAccountsQueryDocument();
         public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
-        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x20, 0x7b, 0x20, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
-        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "3d0fdbef2f482292251c624094a4fe62");
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x20, 0x7b, 0x20, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "ed484dafa2a680f851baf1a57d6937a1");
         public override global::System.String ToString()
         {
 #if NETSTANDARD2_0
@@ -1843,7 +2386,7 @@ namespace SchedulerExecutorApplication.GraphQl
     ///   accounts {
     ///     __typename
     ///     id
-    ///     ... on Account {
+    ///     ... on Person {
     ///       id
     ///     }
     ///   }
@@ -1895,7 +2438,7 @@ namespace SchedulerExecutorApplication.GraphQl
     ///   accounts {
     ///     __typename
     ///     id
-    ///     ... on Account {
+    ///     ... on Person {
     ///       id
     ///     }
     ///   }
@@ -2066,11 +2609,11 @@ namespace SchedulerExecutorApplication.GraphQl
     /// Represents the operation service of the GetLogin GraphQL operation
     /// <code>
     /// query GetLogin($login: String, $password: String) {
-    ///   login(login: $login, password: $password) {
+    ///   localLogin(login: $login, password: $password) {
     ///     __typename
     ///     id
     ///     login
-    ///     ... on Account {
+    ///     ... on Person {
     ///       id
     ///     }
     ///   }
@@ -2086,8 +2629,8 @@ namespace SchedulerExecutorApplication.GraphQl
 
         public static GetLoginQueryDocument Instance { get; } = new GetLoginQueryDocument();
         public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Query;
-        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x28, 0x24, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x24, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x29, 0x20, 0x7b, 0x20, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x28, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x3a, 0x20, 0x24, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x2c, 0x20, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x3a, 0x20, 0x24, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
-        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "bec262a4dbc05cba9b3e194439e37a55");
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x71, 0x75, 0x65, 0x72, 0x79, 0x20, 0x47, 0x65, 0x74, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x28, 0x24, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x24, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x29, 0x20, 0x7b, 0x20, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x28, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x3a, 0x20, 0x24, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x2c, 0x20, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x3a, 0x20, 0x24, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x50, 0x65, 0x72, 0x73, 0x6f, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "73381d198c672566aa0b3cc6e0e89a6d");
         public override global::System.String ToString()
         {
 #if NETSTANDARD2_0
@@ -2102,11 +2645,11 @@ namespace SchedulerExecutorApplication.GraphQl
     /// Represents the operation service of the GetLogin GraphQL operation
     /// <code>
     /// query GetLogin($login: String, $password: String) {
-    ///   login(login: $login, password: $password) {
+    ///   localLogin(login: $login, password: $password) {
     ///     __typename
     ///     id
     ///     login
-    ///     ... on Account {
+    ///     ... on Person {
     ///       id
     ///     }
     ///   }
@@ -2184,11 +2727,11 @@ namespace SchedulerExecutorApplication.GraphQl
     /// Represents the operation service of the GetLogin GraphQL operation
     /// <code>
     /// query GetLogin($login: String, $password: String) {
-    ///   login(login: $login, password: $password) {
+    ///   localLogin(login: $login, password: $password) {
     ///     __typename
     ///     id
     ///     login
-    ///     ... on Account {
+    ///     ... on Person {
     ///       id
     ///     }
     ///   }
@@ -2209,8 +2752,9 @@ namespace SchedulerExecutorApplication.GraphQl
     ///   onFlowStart(topicName: $topicName) {
     ///     __typename
     ///     id
-    ///     name
-    ///     ... on Flow {
+    ///     flowId
+    ///     executorId
+    ///     ... on FlowRun {
     ///       id
     ///     }
     ///   }
@@ -2226,8 +2770,8 @@ namespace SchedulerExecutorApplication.GraphQl
 
         public static OnFlowStartSubscriptionDocument Instance { get; } = new OnFlowStartSubscriptionDocument();
         public global::StrawberryShake.OperationKind Kind => global::StrawberryShake.OperationKind.Subscription;
-        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x4f, 0x6e, 0x46, 0x6c, 0x6f, 0x77, 0x53, 0x74, 0x61, 0x72, 0x74, 0x28, 0x24, 0x74, 0x6f, 0x70, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x29, 0x20, 0x7b, 0x20, 0x6f, 0x6e, 0x46, 0x6c, 0x6f, 0x77, 0x53, 0x74, 0x61, 0x72, 0x74, 0x28, 0x74, 0x6f, 0x70, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x3a, 0x20, 0x24, 0x74, 0x6f, 0x70, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x46, 0x6c, 0x6f, 0x77, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
-        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "015a18af756a493f38b912f7b9deaa8a");
+        public global::System.ReadOnlySpan<global::System.Byte> Body => new global::System.Byte[]{0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x20, 0x4f, 0x6e, 0x46, 0x6c, 0x6f, 0x77, 0x53, 0x74, 0x61, 0x72, 0x74, 0x28, 0x24, 0x74, 0x6f, 0x70, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x3a, 0x20, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x29, 0x20, 0x7b, 0x20, 0x6f, 0x6e, 0x46, 0x6c, 0x6f, 0x77, 0x53, 0x74, 0x61, 0x72, 0x74, 0x28, 0x74, 0x6f, 0x70, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x3a, 0x20, 0x24, 0x74, 0x6f, 0x70, 0x69, 0x63, 0x4e, 0x61, 0x6d, 0x65, 0x29, 0x20, 0x7b, 0x20, 0x5f, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x64, 0x20, 0x66, 0x6c, 0x6f, 0x77, 0x49, 0x64, 0x20, 0x65, 0x78, 0x65, 0x63, 0x75, 0x74, 0x6f, 0x72, 0x49, 0x64, 0x20, 0x2e, 0x2e, 0x2e, 0x20, 0x6f, 0x6e, 0x20, 0x46, 0x6c, 0x6f, 0x77, 0x52, 0x75, 0x6e, 0x20, 0x7b, 0x20, 0x69, 0x64, 0x20, 0x7d, 0x20, 0x7d, 0x20, 0x7d};
+        public global::StrawberryShake.DocumentHash Hash { get; } = new global::StrawberryShake.DocumentHash("md5Hash", "e0e8317b30c27754c3349816d1990f82");
         public override global::System.String ToString()
         {
 #if NETSTANDARD2_0
@@ -2245,8 +2789,9 @@ namespace SchedulerExecutorApplication.GraphQl
     ///   onFlowStart(topicName: $topicName) {
     ///     __typename
     ///     id
-    ///     name
-    ///     ... on Flow {
+    ///     flowId
+    ///     executorId
+    ///     ... on FlowRun {
     ///       id
     ///     }
     ///   }
@@ -2308,8 +2853,9 @@ namespace SchedulerExecutorApplication.GraphQl
     ///   onFlowStart(topicName: $topicName) {
     ///     __typename
     ///     id
-    ///     name
-    ///     ... on Flow {
+    ///     flowId
+    ///     executorId
+    ///     ... on FlowRun {
     ///       id
     ///     }
     ///   }
@@ -2330,14 +2876,16 @@ namespace SchedulerExecutorApplication.GraphQl
     {
         private readonly global::SchedulerExecutorApplication.GraphQl.ICreateExecutorMutation _createExecutor;
         private readonly global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusMutation _createExecutorStatus;
+        private readonly global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusMutation _createFlowTaskStatus;
         private readonly global::SchedulerExecutorApplication.GraphQl.IGetAccountsQuery _getAccounts;
         private readonly global::SchedulerExecutorApplication.GraphQl.IGetFlowTasksForFlowQuery _getFlowTasksForFlow;
         private readonly global::SchedulerExecutorApplication.GraphQl.IGetLoginQuery _getLogin;
         private readonly global::SchedulerExecutorApplication.GraphQl.IOnFlowStartSubscription _onFlowStart;
-        public SchedulerServer(global::SchedulerExecutorApplication.GraphQl.ICreateExecutorMutation createExecutor, global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusMutation createExecutorStatus, global::SchedulerExecutorApplication.GraphQl.IGetAccountsQuery getAccounts, global::SchedulerExecutorApplication.GraphQl.IGetFlowTasksForFlowQuery getFlowTasksForFlow, global::SchedulerExecutorApplication.GraphQl.IGetLoginQuery getLogin, global::SchedulerExecutorApplication.GraphQl.IOnFlowStartSubscription onFlowStart)
+        public SchedulerServer(global::SchedulerExecutorApplication.GraphQl.ICreateExecutorMutation createExecutor, global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusMutation createExecutorStatus, global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusMutation createFlowTaskStatus, global::SchedulerExecutorApplication.GraphQl.IGetAccountsQuery getAccounts, global::SchedulerExecutorApplication.GraphQl.IGetFlowTasksForFlowQuery getFlowTasksForFlow, global::SchedulerExecutorApplication.GraphQl.IGetLoginQuery getLogin, global::SchedulerExecutorApplication.GraphQl.IOnFlowStartSubscription onFlowStart)
         {
             _createExecutor = createExecutor ?? throw new global::System.ArgumentNullException(nameof(createExecutor));
             _createExecutorStatus = createExecutorStatus ?? throw new global::System.ArgumentNullException(nameof(createExecutorStatus));
+            _createFlowTaskStatus = createFlowTaskStatus ?? throw new global::System.ArgumentNullException(nameof(createFlowTaskStatus));
             _getAccounts = getAccounts ?? throw new global::System.ArgumentNullException(nameof(getAccounts));
             _getFlowTasksForFlow = getFlowTasksForFlow ?? throw new global::System.ArgumentNullException(nameof(getFlowTasksForFlow));
             _getLogin = getLogin ?? throw new global::System.ArgumentNullException(nameof(getLogin));
@@ -2347,6 +2895,7 @@ namespace SchedulerExecutorApplication.GraphQl
         public static global::System.String ClientName => "SchedulerServer";
         public global::SchedulerExecutorApplication.GraphQl.ICreateExecutorMutation CreateExecutor => _createExecutor;
         public global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusMutation CreateExecutorStatus => _createExecutorStatus;
+        public global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusMutation CreateFlowTaskStatus => _createFlowTaskStatus;
         public global::SchedulerExecutorApplication.GraphQl.IGetAccountsQuery GetAccounts => _getAccounts;
         public global::SchedulerExecutorApplication.GraphQl.IGetFlowTasksForFlowQuery GetFlowTasksForFlow => _getFlowTasksForFlow;
         public global::SchedulerExecutorApplication.GraphQl.IGetLoginQuery GetLogin => _getLogin;
@@ -2362,6 +2911,8 @@ namespace SchedulerExecutorApplication.GraphQl
         global::SchedulerExecutorApplication.GraphQl.ICreateExecutorMutation CreateExecutor { get; }
 
         global::SchedulerExecutorApplication.GraphQl.ICreateExecutorStatusMutation CreateExecutorStatus { get; }
+
+        global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusMutation CreateFlowTaskStatus { get; }
 
         global::SchedulerExecutorApplication.GraphQl.IGetAccountsQuery GetAccounts { get; }
 
@@ -2401,9 +2952,20 @@ namespace SchedulerExecutorApplication.GraphQl.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class AccountEntity
+    public partial class FlowTaskStatusEntity
     {
-        public AccountEntity(global::System.Int32 id = default !, global::System.String? login = default !)
+        public FlowTaskStatusEntity(global::System.Int32 id = default !)
+        {
+            Id = id;
+        }
+
+        public global::System.Int32 Id { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class PersonEntity
+    {
+        public PersonEntity(global::System.Int32 id = default !, global::System.String? login = default !)
         {
             Id = id;
             Login = login;
@@ -2455,17 +3017,20 @@ namespace SchedulerExecutorApplication.GraphQl.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class FlowEntity
+    public partial class FlowRunEntity
     {
-        public FlowEntity(global::System.Int32 id = default !, global::System.String? name = default !)
+        public FlowRunEntity(global::System.Int32 id = default !, global::System.Int32 flowId = default !, global::System.Int32 executorId = default !)
         {
             Id = id;
-            Name = name;
+            FlowId = flowId;
+            ExecutorId = executorId;
         }
 
         public global::System.Int32 Id { get; }
 
-        public global::System.String? Name { get; }
+        public global::System.Int32 FlowId { get; }
+
+        public global::System.Int32 ExecutorId { get; }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
@@ -2649,14 +3214,104 @@ namespace SchedulerExecutorApplication.GraphQl.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatusResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.CreateFlowTaskStatusResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity, CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus> _createFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper;
+        public CreateFlowTaskStatusResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity, CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus> createFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _createFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper = createFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper ?? throw new global::System.ArgumentNullException(nameof(createFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper));
+        }
+
+        global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult);
+        public CreateFlowTaskStatusResult Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            if (dataInfo is CreateFlowTaskStatusResultInfo info)
+            {
+                return new CreateFlowTaskStatusResult(MapICreateFlowTaskStatus_CreateFlowTaskStatus(info.CreateFlowTaskStatus, snapshot));
+            }
+
+            throw new global::System.ArgumentException("CreateFlowTaskStatusResultInfo expected.");
+        }
+
+        private global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatus_CreateFlowTaskStatus? MapICreateFlowTaskStatus_CreateFlowTaskStatus(global::StrawberryShake.EntityId? entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        {
+            if (entityId is null)
+            {
+                return null;
+            }
+
+            if (entityId.Value.Name.Equals("FlowTaskStatus", global::System.StringComparison.Ordinal))
+            {
+                return _createFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper.Map(snapshot.GetEntity<global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        global::System.Object global::StrawberryShake.IOperationResultDataFactory.Create(global::StrawberryShake.IOperationResultDataInfo dataInfo, global::StrawberryShake.IEntityStoreSnapshot? snapshot)
+        {
+            return Create(dataInfo, snapshot);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatusResultInfo : global::StrawberryShake.IOperationResultDataInfo
+    {
+        private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
+        private readonly global::System.UInt64 _version;
+        public CreateFlowTaskStatusResultInfo(global::StrawberryShake.EntityId? createFlowTaskStatus, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        {
+            CreateFlowTaskStatus = createFlowTaskStatus;
+            _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
+            _version = version;
+        }
+
+        public global::StrawberryShake.EntityId? CreateFlowTaskStatus { get; }
+
+        public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
+        public global::System.UInt64 Version => _version;
+        public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
+        {
+            return new CreateFlowTaskStatusResultInfo(CreateFlowTaskStatus, _entityIds, version);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper : global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity, CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        public CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatusFromFlowTaskStatusEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+        }
+
+        public CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus Map(global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        {
+            if (snapshot is null)
+            {
+                snapshot = _entityStore.CurrentSnapshot;
+            }
+
+            return new CreateFlowTaskStatus_CreateFlowTaskStatus_FlowTaskStatus(entity.Id);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class GetAccountsResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.GetAccountsResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
-        private readonly global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, GetAccounts_Accounts_Account> _getAccounts_Accounts_AccountFromAccountEntityMapper;
-        public GetAccountsResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, GetAccounts_Accounts_Account> getAccounts_Accounts_AccountFromAccountEntityMapper)
+        private readonly global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, GetAccounts_Accounts_Person> _getAccounts_Accounts_PersonFromPersonEntityMapper;
+        public GetAccountsResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, GetAccounts_Accounts_Person> getAccounts_Accounts_PersonFromPersonEntityMapper)
         {
             _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
-            _getAccounts_Accounts_AccountFromAccountEntityMapper = getAccounts_Accounts_AccountFromAccountEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getAccounts_Accounts_AccountFromAccountEntityMapper));
+            _getAccounts_Accounts_PersonFromPersonEntityMapper = getAccounts_Accounts_PersonFromPersonEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getAccounts_Accounts_PersonFromPersonEntityMapper));
         }
 
         global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::SchedulerExecutorApplication.GraphQl.IGetAccountsResult);
@@ -2682,13 +3337,13 @@ namespace SchedulerExecutorApplication.GraphQl.State
                 return null;
             }
 
-            var accounts = new global::System.Collections.Generic.List<global::SchedulerExecutorApplication.GraphQl.IGetAccounts_Accounts?>();
+            var persons = new global::System.Collections.Generic.List<global::SchedulerExecutorApplication.GraphQl.IGetAccounts_Accounts?>();
             foreach (global::StrawberryShake.EntityId? child in list)
             {
-                accounts.Add(MapIGetAccounts_Accounts(child, snapshot));
+                persons.Add(MapIGetAccounts_Accounts(child, snapshot));
             }
 
-            return accounts;
+            return persons;
         }
 
         private global::SchedulerExecutorApplication.GraphQl.IGetAccounts_Accounts? MapIGetAccounts_Accounts(global::StrawberryShake.EntityId? entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
@@ -2698,9 +3353,9 @@ namespace SchedulerExecutorApplication.GraphQl.State
                 return null;
             }
 
-            if (entityId.Value.Name.Equals("Account", global::System.StringComparison.Ordinal))
+            if (entityId.Value.Name.Equals("Person", global::System.StringComparison.Ordinal))
             {
-                return _getAccounts_Accounts_AccountFromAccountEntityMapper.Map(snapshot.GetEntity<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
+                return _getAccounts_Accounts_PersonFromPersonEntityMapper.Map(snapshot.GetEntity<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
             }
 
             throw new global::System.NotSupportedException();
@@ -2735,22 +3390,22 @@ namespace SchedulerExecutorApplication.GraphQl.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class GetAccounts_Accounts_AccountFromAccountEntityMapper : global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, GetAccounts_Accounts_Account>
+    public partial class GetAccounts_Accounts_PersonFromPersonEntityMapper : global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, GetAccounts_Accounts_Person>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
-        public GetAccounts_Accounts_AccountFromAccountEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        public GetAccounts_Accounts_PersonFromPersonEntityMapper(global::StrawberryShake.IEntityStore entityStore)
         {
             _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
         }
 
-        public GetAccounts_Accounts_Account Map(global::SchedulerExecutorApplication.GraphQl.State.AccountEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        public GetAccounts_Accounts_Person Map(global::SchedulerExecutorApplication.GraphQl.State.PersonEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
         {
             if (snapshot is null)
             {
                 snapshot = _entityStore.CurrentSnapshot;
             }
 
-            return new GetAccounts_Accounts_Account(entity.Id);
+            return new GetAccounts_Accounts_Person(entity.Id);
         }
     }
 
@@ -2901,11 +3556,11 @@ namespace SchedulerExecutorApplication.GraphQl.State
     public partial class GetLoginResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.GetLoginResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
-        private readonly global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, GetLogin_Login_Account> _getLogin_Login_AccountFromAccountEntityMapper;
-        public GetLoginResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, GetLogin_Login_Account> getLogin_Login_AccountFromAccountEntityMapper)
+        private readonly global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, GetLogin_LocalLogin_Person> _getLogin_LocalLogin_PersonFromPersonEntityMapper;
+        public GetLoginResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, GetLogin_LocalLogin_Person> getLogin_LocalLogin_PersonFromPersonEntityMapper)
         {
             _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
-            _getLogin_Login_AccountFromAccountEntityMapper = getLogin_Login_AccountFromAccountEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getLogin_Login_AccountFromAccountEntityMapper));
+            _getLogin_LocalLogin_PersonFromPersonEntityMapper = getLogin_LocalLogin_PersonFromPersonEntityMapper ?? throw new global::System.ArgumentNullException(nameof(getLogin_LocalLogin_PersonFromPersonEntityMapper));
         }
 
         global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::SchedulerExecutorApplication.GraphQl.IGetLoginResult);
@@ -2918,22 +3573,22 @@ namespace SchedulerExecutorApplication.GraphQl.State
 
             if (dataInfo is GetLoginResultInfo info)
             {
-                return new GetLoginResult(MapIGetLogin_Login(info.Login, snapshot));
+                return new GetLoginResult(MapIGetLogin_LocalLogin(info.LocalLogin, snapshot));
             }
 
             throw new global::System.ArgumentException("GetLoginResultInfo expected.");
         }
 
-        private global::SchedulerExecutorApplication.GraphQl.IGetLogin_Login? MapIGetLogin_Login(global::StrawberryShake.EntityId? entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
+        private global::SchedulerExecutorApplication.GraphQl.IGetLogin_LocalLogin? MapIGetLogin_LocalLogin(global::StrawberryShake.EntityId? entityId, global::StrawberryShake.IEntityStoreSnapshot snapshot)
         {
             if (entityId is null)
             {
                 return null;
             }
 
-            if (entityId.Value.Name.Equals("Account", global::System.StringComparison.Ordinal))
+            if (entityId.Value.Name.Equals("Person", global::System.StringComparison.Ordinal))
             {
-                return _getLogin_Login_AccountFromAccountEntityMapper.Map(snapshot.GetEntity<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
+                return _getLogin_LocalLogin_PersonFromPersonEntityMapper.Map(snapshot.GetEntity<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
             }
 
             throw new global::System.NotSupportedException();
@@ -2950,40 +3605,40 @@ namespace SchedulerExecutorApplication.GraphQl.State
     {
         private readonly global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> _entityIds;
         private readonly global::System.UInt64 _version;
-        public GetLoginResultInfo(global::StrawberryShake.EntityId? login, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
+        public GetLoginResultInfo(global::StrawberryShake.EntityId? localLogin, global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> entityIds, global::System.UInt64 version)
         {
-            Login = login;
+            LocalLogin = localLogin;
             _entityIds = entityIds ?? throw new global::System.ArgumentNullException(nameof(entityIds));
             _version = version;
         }
 
-        public global::StrawberryShake.EntityId? Login { get; }
+        public global::StrawberryShake.EntityId? LocalLogin { get; }
 
         public global::System.Collections.Generic.IReadOnlyCollection<global::StrawberryShake.EntityId> EntityIds => _entityIds;
         public global::System.UInt64 Version => _version;
         public global::StrawberryShake.IOperationResultDataInfo WithVersion(global::System.UInt64 version)
         {
-            return new GetLoginResultInfo(Login, _entityIds, version);
+            return new GetLoginResultInfo(LocalLogin, _entityIds, version);
         }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class GetLogin_Login_AccountFromAccountEntityMapper : global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.AccountEntity, GetLogin_Login_Account>
+    public partial class GetLogin_LocalLogin_PersonFromPersonEntityMapper : global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.PersonEntity, GetLogin_LocalLogin_Person>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
-        public GetLogin_Login_AccountFromAccountEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        public GetLogin_LocalLogin_PersonFromPersonEntityMapper(global::StrawberryShake.IEntityStore entityStore)
         {
             _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
         }
 
-        public GetLogin_Login_Account Map(global::SchedulerExecutorApplication.GraphQl.State.AccountEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        public GetLogin_LocalLogin_Person Map(global::SchedulerExecutorApplication.GraphQl.State.PersonEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
         {
             if (snapshot is null)
             {
                 snapshot = _entityStore.CurrentSnapshot;
             }
 
-            return new GetLogin_Login_Account(entity.Id, entity.Login);
+            return new GetLogin_LocalLogin_Person(entity.Id, entity.Login);
         }
     }
 
@@ -2991,11 +3646,11 @@ namespace SchedulerExecutorApplication.GraphQl.State
     public partial class OnFlowStartResultFactory : global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.OnFlowStartResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
-        private readonly global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowEntity, OnFlowStart_OnFlowStart_Flow> _onFlowStart_OnFlowStart_FlowFromFlowEntityMapper;
-        public OnFlowStartResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowEntity, OnFlowStart_OnFlowStart_Flow> onFlowStart_OnFlowStart_FlowFromFlowEntityMapper)
+        private readonly global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity, OnFlowStart_OnFlowStart_FlowRun> _onFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper;
+        public OnFlowStartResultFactory(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity, OnFlowStart_OnFlowStart_FlowRun> onFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper)
         {
             _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
-            _onFlowStart_OnFlowStart_FlowFromFlowEntityMapper = onFlowStart_OnFlowStart_FlowFromFlowEntityMapper ?? throw new global::System.ArgumentNullException(nameof(onFlowStart_OnFlowStart_FlowFromFlowEntityMapper));
+            _onFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper = onFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper ?? throw new global::System.ArgumentNullException(nameof(onFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper));
         }
 
         global::System.Type global::StrawberryShake.IOperationResultDataFactory.ResultType => typeof(global::SchedulerExecutorApplication.GraphQl.IOnFlowStartResult);
@@ -3021,9 +3676,9 @@ namespace SchedulerExecutorApplication.GraphQl.State
                 return null;
             }
 
-            if (entityId.Value.Name.Equals("Flow", global::System.StringComparison.Ordinal))
+            if (entityId.Value.Name.Equals("FlowRun", global::System.StringComparison.Ordinal))
             {
-                return _onFlowStart_OnFlowStart_FlowFromFlowEntityMapper.Map(snapshot.GetEntity<global::SchedulerExecutorApplication.GraphQl.State.FlowEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
+                return _onFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper.Map(snapshot.GetEntity<global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity>(entityId.Value) ?? throw new global::StrawberryShake.GraphQLClientException());
             }
 
             throw new global::System.NotSupportedException();
@@ -3058,22 +3713,22 @@ namespace SchedulerExecutorApplication.GraphQl.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
-    public partial class OnFlowStart_OnFlowStart_FlowFromFlowEntityMapper : global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowEntity, OnFlowStart_OnFlowStart_Flow>
+    public partial class OnFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper : global::StrawberryShake.IEntityMapper<global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity, OnFlowStart_OnFlowStart_FlowRun>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
-        public OnFlowStart_OnFlowStart_FlowFromFlowEntityMapper(global::StrawberryShake.IEntityStore entityStore)
+        public OnFlowStart_OnFlowStart_FlowRunFromFlowRunEntityMapper(global::StrawberryShake.IEntityStore entityStore)
         {
             _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
         }
 
-        public OnFlowStart_OnFlowStart_Flow Map(global::SchedulerExecutorApplication.GraphQl.State.FlowEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
+        public OnFlowStart_OnFlowStart_FlowRun Map(global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity entity, global::StrawberryShake.IEntityStoreSnapshot? snapshot = null)
         {
             if (snapshot is null)
             {
                 snapshot = _entityStore.CurrentSnapshot;
             }
 
-            return new OnFlowStart_OnFlowStart_Flow(entity.Id, entity.Name);
+            return new OnFlowStart_OnFlowStart_FlowRun(entity.Id, entity.FlowId, entity.ExecutorId);
         }
     }
 
@@ -3093,6 +3748,20 @@ namespace SchedulerExecutorApplication.GraphQl.State
         global::System.Boolean IsExecutorIdSet { get; }
 
         global::System.Boolean IsStatusCodeSet { get; }
+
+        global::System.Boolean IsDateSet { get; }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    internal interface IFlowTaskStatusInputInfo
+    {
+        global::System.Boolean IsFlowRunIdSet { get; }
+
+        global::System.Boolean IsFlowTaskIdSet { get; }
+
+        global::System.Boolean IsStatusCodeSet { get; }
+
+        global::System.Boolean IsDescriptionSet { get; }
 
         global::System.Boolean IsDateSet { get; }
     }
@@ -3328,6 +3997,119 @@ namespace SchedulerExecutorApplication.GraphQl.State
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
+    public partial class CreateFlowTaskStatusBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult>
+    {
+        private readonly global::StrawberryShake.IEntityStore _entityStore;
+        private readonly global::StrawberryShake.IEntityIdSerializer _idSerializer;
+        private readonly global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult> _resultDataFactory;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusCode> _flowTaskStatusCodeParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int32, global::System.Int32> _intParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.String, global::System.String> _stringParser;
+        private readonly global::StrawberryShake.Serialization.ILeafValueParser<global::System.Int64, global::System.Int64> _longParser;
+        public CreateFlowTaskStatusBuilder(global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer idSerializer, global::StrawberryShake.IOperationResultDataFactory<global::SchedulerExecutorApplication.GraphQl.ICreateFlowTaskStatusResult> resultDataFactory, global::StrawberryShake.Serialization.ISerializerResolver serializerResolver)
+        {
+            _entityStore = entityStore ?? throw new global::System.ArgumentNullException(nameof(entityStore));
+            _idSerializer = idSerializer ?? throw new global::System.ArgumentNullException(nameof(idSerializer));
+            _resultDataFactory = resultDataFactory ?? throw new global::System.ArgumentNullException(nameof(resultDataFactory));
+            _flowTaskStatusCodeParser = serializerResolver.GetLeafValueParser<global::System.String, global::SchedulerExecutorApplication.GraphQl.FlowTaskStatusCode>("FlowTaskStatusCode") ?? throw new global::System.ArgumentException("No serializer for type `FlowTaskStatusCode` found.");
+            _intParser = serializerResolver.GetLeafValueParser<global::System.Int32, global::System.Int32>("Int") ?? throw new global::System.ArgumentException("No serializer for type `Int` found.");
+            _stringParser = serializerResolver.GetLeafValueParser<global::System.String, global::System.String>("String") ?? throw new global::System.ArgumentException("No serializer for type `String` found.");
+            _longParser = serializerResolver.GetLeafValueParser<global::System.Int64, global::System.Int64>("Long") ?? throw new global::System.ArgumentException("No serializer for type `Long` found.");
+        }
+
+        public global::StrawberryShake.IOperationResult<ICreateFlowTaskStatusResult> Build(global::StrawberryShake.Response<global::System.Text.Json.JsonDocument> response)
+        {
+            (ICreateFlowTaskStatusResult Result, CreateFlowTaskStatusResultInfo Info)? data = null;
+            global::System.Collections.Generic.IReadOnlyList<global::StrawberryShake.IClientError>? errors = null;
+            if (response.Exception is null)
+            {
+                try
+                {
+                    if (response.Body != null)
+                    {
+                        if (response.Body.RootElement.TryGetProperty("data", out global::System.Text.Json.JsonElement dataElement) && dataElement.ValueKind == global::System.Text.Json.JsonValueKind.Object)
+                        {
+                            data = BuildData(dataElement);
+                        }
+
+                        if (response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                        {
+                            errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                        }
+                    }
+                }
+                catch (global::System.Exception ex)
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(ex.Message, exception: ex, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+            else
+            {
+                if (response.Body != null && response.Body.RootElement.TryGetProperty("errors", out global::System.Text.Json.JsonElement errorsElement))
+                {
+                    errors = global::StrawberryShake.Json.JsonErrorParser.ParseErrors(errorsElement);
+                }
+                else
+                {
+                    errors = new global::StrawberryShake.IClientError[]{new global::StrawberryShake.ClientError(response.Exception.Message, exception: response.Exception, extensions: new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Object?>{{"body", response.Body?.RootElement.ToString()}})};
+                }
+            }
+
+            return new global::StrawberryShake.OperationResult<ICreateFlowTaskStatusResult>(data?.Result, data?.Info, _resultDataFactory, errors);
+        }
+
+        private (ICreateFlowTaskStatusResult, CreateFlowTaskStatusResultInfo) BuildData(global::System.Text.Json.JsonElement obj)
+        {
+            var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
+            global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
+            global::StrawberryShake.EntityId? createFlowTaskStatusId = default !;
+            _entityStore.Update(session =>
+            {
+                createFlowTaskStatusId = UpdateICreateFlowTaskStatus_CreateFlowTaskStatusEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "createFlowTaskStatus"), entityIds);
+                snapshot = session.CurrentSnapshot;
+            });
+            var resultInfo = new CreateFlowTaskStatusResultInfo(createFlowTaskStatusId, entityIds, snapshot.Version);
+            return (_resultDataFactory.Create(resultInfo), resultInfo);
+        }
+
+        private global::StrawberryShake.EntityId? UpdateICreateFlowTaskStatus_CreateFlowTaskStatusEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        {
+            if (!obj.HasValue)
+            {
+                return null;
+            }
+
+            global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
+            entityIds.Add(entityId);
+            if (entityId.Name.Equals("FlowTaskStatus", global::System.StringComparison.Ordinal))
+            {
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity? entity))
+                {
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id"))));
+                }
+                else
+                {
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.FlowTaskStatusEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id"))));
+                }
+
+                return entityId;
+            }
+
+            throw new global::System.NotSupportedException();
+        }
+
+        private global::System.Int32 DeserializeNonNullableInt32(global::System.Text.Json.JsonElement? obj)
+        {
+            if (!obj.HasValue)
+            {
+                throw new global::System.ArgumentNullException();
+            }
+
+            return _intParser.Parse(obj.Value.GetInt32()!);
+        }
+    }
+
+    [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class GetAccountsBuilder : global::StrawberryShake.IOperationResultBuilder<global::System.Text.Json.JsonDocument, global::SchedulerExecutorApplication.GraphQl.IGetAccountsResult>
     {
         private readonly global::StrawberryShake.IEntityStore _entityStore;
@@ -3404,13 +4186,13 @@ namespace SchedulerExecutorApplication.GraphQl.State
                 return null;
             }
 
-            var accounts = new global::System.Collections.Generic.List<global::StrawberryShake.EntityId?>();
+            var persons = new global::System.Collections.Generic.List<global::StrawberryShake.EntityId?>();
             foreach (global::System.Text.Json.JsonElement child in obj.Value.EnumerateArray())
             {
-                accounts.Add(UpdateIGetAccounts_AccountsEntity(session, child, entityIds));
+                persons.Add(UpdateIGetAccounts_AccountsEntity(session, child, entityIds));
             }
 
-            return accounts;
+            return persons;
         }
 
         private global::StrawberryShake.EntityId? UpdateIGetAccounts_AccountsEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
@@ -3422,15 +4204,15 @@ namespace SchedulerExecutorApplication.GraphQl.State
 
             global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
             entityIds.Add(entityId);
-            if (entityId.Name.Equals("Account", global::System.StringComparison.Ordinal))
+            if (entityId.Name.Equals("Person", global::System.StringComparison.Ordinal))
             {
-                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::SchedulerExecutorApplication.GraphQl.State.AccountEntity? entity))
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::SchedulerExecutorApplication.GraphQl.State.PersonEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.AccountEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), entity.Login));
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.PersonEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), entity.Login));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.AccountEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), default !));
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.PersonEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), default !));
                 }
 
                 return entityId;
@@ -3701,17 +4483,17 @@ namespace SchedulerExecutorApplication.GraphQl.State
         {
             var entityIds = new global::System.Collections.Generic.HashSet<global::StrawberryShake.EntityId>();
             global::StrawberryShake.IEntityStoreSnapshot snapshot = default !;
-            global::StrawberryShake.EntityId? loginId = default !;
+            global::StrawberryShake.EntityId? localLoginId = default !;
             _entityStore.Update(session =>
             {
-                loginId = UpdateIGetLogin_LoginEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "login"), entityIds);
+                localLoginId = UpdateIGetLogin_LocalLoginEntity(session, global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "localLogin"), entityIds);
                 snapshot = session.CurrentSnapshot;
             });
-            var resultInfo = new GetLoginResultInfo(loginId, entityIds, snapshot.Version);
+            var resultInfo = new GetLoginResultInfo(localLoginId, entityIds, snapshot.Version);
             return (_resultDataFactory.Create(resultInfo), resultInfo);
         }
 
-        private global::StrawberryShake.EntityId? UpdateIGetLogin_LoginEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
+        private global::StrawberryShake.EntityId? UpdateIGetLogin_LocalLoginEntity(global::StrawberryShake.IEntityStoreUpdateSession session, global::System.Text.Json.JsonElement? obj, global::System.Collections.Generic.ISet<global::StrawberryShake.EntityId> entityIds)
         {
             if (!obj.HasValue)
             {
@@ -3720,15 +4502,15 @@ namespace SchedulerExecutorApplication.GraphQl.State
 
             global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
             entityIds.Add(entityId);
-            if (entityId.Name.Equals("Account", global::System.StringComparison.Ordinal))
+            if (entityId.Name.Equals("Person", global::System.StringComparison.Ordinal))
             {
-                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::SchedulerExecutorApplication.GraphQl.State.AccountEntity? entity))
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::SchedulerExecutorApplication.GraphQl.State.PersonEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.AccountEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "login"))));
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.PersonEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "login"))));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.AccountEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "login"))));
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.PersonEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "login"))));
                 }
 
                 return entityId;
@@ -3839,15 +4621,15 @@ namespace SchedulerExecutorApplication.GraphQl.State
 
             global::StrawberryShake.EntityId entityId = _idSerializer.Parse(obj.Value);
             entityIds.Add(entityId);
-            if (entityId.Name.Equals("Flow", global::System.StringComparison.Ordinal))
+            if (entityId.Name.Equals("FlowRun", global::System.StringComparison.Ordinal))
             {
-                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::SchedulerExecutorApplication.GraphQl.State.FlowEntity? entity))
+                if (session.CurrentSnapshot.TryGetEntity(entityId, out global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity? entity))
                 {
-                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.FlowEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "name"))));
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "flowId")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "executorId"))));
                 }
                 else
                 {
-                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.FlowEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeString(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "name"))));
+                    session.SetEntity(entityId, new global::SchedulerExecutorApplication.GraphQl.State.FlowRunEntity(DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "id")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "flowId")), DeserializeNonNullableInt32(global::StrawberryShake.Json.JsonElementExtensions.GetPropertyOrNull(obj, "executorId"))));
                 }
 
                 return entityId;
@@ -3865,16 +4647,6 @@ namespace SchedulerExecutorApplication.GraphQl.State
 
             return _intParser.Parse(obj.Value.GetInt32()!);
         }
-
-        private global::System.String? DeserializeString(global::System.Text.Json.JsonElement? obj)
-        {
-            if (!obj.HasValue)
-            {
-                return null;
-            }
-
-            return _stringParser.Parse(obj.Value.GetString()!);
-        }
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
@@ -3887,18 +4659,28 @@ namespace SchedulerExecutorApplication.GraphQl.State
             global::System.String __typename = obj.GetProperty("__typename").GetString()!;
             return __typename switch
             {
-            "Executor" => ParseExecutorEntityId(obj, __typename), "ExecutorStatus" => ParseExecutorStatusEntityId(obj, __typename), "Account" => ParseAccountEntityId(obj, __typename), "FlowTask" => ParseFlowTaskEntityId(obj, __typename), "Task" => ParseTaskEntityId(obj, __typename), "Flow" => ParseFlowEntityId(obj, __typename), _ => throw new global::System.NotSupportedException()}
-
-            ;
+                "Executor" => ParseExecutorEntityId(obj, __typename),
+                "ExecutorStatus" => ParseExecutorStatusEntityId(obj, __typename),
+                "FlowTaskStatus" => ParseFlowTaskStatusEntityId(obj, __typename),
+                "Person" => ParsePersonEntityId(obj, __typename),
+                "FlowTask" => ParseFlowTaskEntityId(obj, __typename),
+                "Task" => ParseTaskEntityId(obj, __typename),
+                "FlowRun" => ParseFlowRunEntityId(obj, __typename),
+                _ => throw new global::System.NotSupportedException()};
         }
 
         public global::System.String Format(global::StrawberryShake.EntityId entityId)
         {
             return entityId.Name switch
             {
-            "Executor" => FormatExecutorEntityId(entityId), "ExecutorStatus" => FormatExecutorStatusEntityId(entityId), "Account" => FormatAccountEntityId(entityId), "FlowTask" => FormatFlowTaskEntityId(entityId), "Task" => FormatTaskEntityId(entityId), "Flow" => FormatFlowEntityId(entityId), _ => throw new global::System.NotSupportedException()}
-
-            ;
+                "Executor" => FormatExecutorEntityId(entityId),
+                "ExecutorStatus" => FormatExecutorStatusEntityId(entityId),
+                "FlowTaskStatus" => FormatFlowTaskStatusEntityId(entityId),
+                "Person" => FormatPersonEntityId(entityId),
+                "FlowTask" => FormatFlowTaskEntityId(entityId),
+                "Task" => FormatTaskEntityId(entityId),
+                "FlowRun" => FormatFlowRunEntityId(entityId),
+                _ => throw new global::System.NotSupportedException()};
         }
 
         private global::StrawberryShake.EntityId ParseExecutorEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
@@ -3935,12 +4717,29 @@ namespace SchedulerExecutorApplication.GraphQl.State
             return global::System.Text.Encoding.UTF8.GetString(writer.GetInternalBuffer(), 0, writer.Length);
         }
 
-        private global::StrawberryShake.EntityId ParseAccountEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
+        private global::StrawberryShake.EntityId ParseFlowTaskStatusEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
         {
             return new global::StrawberryShake.EntityId(type, obj.GetProperty("id").GetInt32()!);
         }
 
-        private global::System.String FormatAccountEntityId(global::StrawberryShake.EntityId entityId)
+        private global::System.String FormatFlowTaskStatusEntityId(global::StrawberryShake.EntityId entityId)
+        {
+            using var writer = new global::StrawberryShake.Internal.ArrayWriter();
+            using var jsonWriter = new global::System.Text.Json.Utf8JsonWriter(writer, _options);
+            jsonWriter.WriteStartObject();
+            jsonWriter.WriteString("__typename", entityId.Name);
+            jsonWriter.WriteNumber("id", (global::System.Int32)entityId.Value);
+            jsonWriter.WriteEndObject();
+            jsonWriter.Flush();
+            return global::System.Text.Encoding.UTF8.GetString(writer.GetInternalBuffer(), 0, writer.Length);
+        }
+
+        private global::StrawberryShake.EntityId ParsePersonEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
+        {
+            return new global::StrawberryShake.EntityId(type, obj.GetProperty("id").GetInt32()!);
+        }
+
+        private global::System.String FormatPersonEntityId(global::StrawberryShake.EntityId entityId)
         {
             using var writer = new global::StrawberryShake.Internal.ArrayWriter();
             using var jsonWriter = new global::System.Text.Json.Utf8JsonWriter(writer, _options);
@@ -3986,12 +4785,12 @@ namespace SchedulerExecutorApplication.GraphQl.State
             return global::System.Text.Encoding.UTF8.GetString(writer.GetInternalBuffer(), 0, writer.Length);
         }
 
-        private global::StrawberryShake.EntityId ParseFlowEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
+        private global::StrawberryShake.EntityId ParseFlowRunEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
         {
             return new global::StrawberryShake.EntityId(type, obj.GetProperty("id").GetInt32()!);
         }
 
-        private global::System.String FormatFlowEntityId(global::StrawberryShake.EntityId entityId)
+        private global::System.String FormatFlowRunEntityId(global::StrawberryShake.EntityId entityId)
         {
             using var writer = new global::StrawberryShake.Internal.ArrayWriter();
             using var jsonWriter = new global::System.Text.Json.Utf8JsonWriter(writer, _options);
@@ -4007,7 +4806,7 @@ namespace SchedulerExecutorApplication.GraphQl.State
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class SchedulerServerStoreAccessor : global::StrawberryShake.StoreAccessor
     {
-        public SchedulerServerStoreAccessor(global::StrawberryShake.IOperationStore operationStore, global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer entityIdSerializer, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory> requestFactories, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory> resultDataFactories): base(operationStore, entityStore, entityIdSerializer, requestFactories, resultDataFactories)
+        public SchedulerServerStoreAccessor(global::StrawberryShake.IOperationStore operationStore, global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer entityIdSerializer, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory> requestFactories, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory> resultDataFactories) : base(operationStore, entityStore, entityIdSerializer, requestFactories, resultDataFactories)
         {
         }
     }

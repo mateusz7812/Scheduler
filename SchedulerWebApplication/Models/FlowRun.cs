@@ -20,10 +20,29 @@ namespace SchedulerWebApplication.Models
         
         public int ExecutorId { get; set; }
 
+        [NotMapped]
+        public FlowTaskStatusCode Status
+        {
+            get
+            {
+                return Statuses is null ? FlowTaskStatusCode.Wait 
+                    : Statuses.Any(s => s.StatusCode == FlowTaskStatusCode.Error) ? FlowTaskStatusCode.Error
+                    : Statuses.All(s => s.StatusCode == FlowTaskStatusCode.Done) ? FlowTaskStatusCode.Done 
+                    : FlowTaskStatusCode.Processing;
+            }
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+
         [GraphQLIgnore]
         public Flow Flow { get; set; }
 
         [GraphQLIgnore]
         public Executor Executor { get; set; }
+
+        [GraphQLIgnore]
+        public ICollection<FlowTaskStatus> Statuses { get; set; } = new List<FlowTaskStatus>();
     }
 }

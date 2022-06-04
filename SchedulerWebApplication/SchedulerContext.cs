@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Oracle.EntityFrameworkCore.Infrastructure;
 using SchedulerWebApplication.Models;
 
 namespace SchedulerWebApplication
@@ -26,10 +27,11 @@ namespace SchedulerWebApplication
         public DbSet<FlowRun> FlowRuns { get; set; }
         public DbSet<FlowTask> FlowTasks { get; set; }
         public DbSet<StartingUp> StartingUps { get; set; }
+        public DbSet<FlowTaskStatus> FlowTaskStatuses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite("Data Source=scheduler.db");
+            options.UseOracle(@"User Id=system;Password=oracle;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=XEPDB1)))");
             options.UseLoggerFactory(_loggerFactory);
         }
 
@@ -104,6 +106,16 @@ namespace SchedulerWebApplication
                 .HasOne(f => f.Flow)
                 .WithMany(e => e.FlowRuns)
                 .HasForeignKey(f => f.FlowId);
+
+            modelBuilder.Entity<FlowTaskStatus>()
+                .HasOne<FlowRun>()
+                .WithMany(f => f.Statuses)
+                .HasForeignKey(e => e.FlowRunId);
+
+            modelBuilder.Entity<FlowTaskStatus>()
+                .HasOne<FlowTask>()
+                .WithMany()
+                .HasForeignKey(f => f.FlowTaskId);
 
             /*modelBuilder.Entity<FlowTask>()
                 .HasMany<FlowTask>(t => t.Predecessors)

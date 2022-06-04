@@ -46,6 +46,11 @@ namespace SchedulerWebApplication
             int accountId) =>
             context.Flows.Where(t => t.PersonId == accountId);//.Include(b => b.Executors);
 
+        public IQueryable<FlowTaskStatus> GetStatusesForFlowRun(
+            [Service] SchedulerContext context,
+            int flowRunId) =>
+            context.FlowRuns.Where(t => t.Id == flowRunId).Include(f=>f.Statuses).First().Statuses.AsQueryable();
+
         public IQueryable<Task> GetTasks([Service]SchedulerContext context) =>
             context.Tasks;
 
@@ -68,14 +73,14 @@ namespace SchedulerWebApplication
             if (flow.FlowTaskId is not null)
             {
                 int i = 0;
-                flowTasks.Add(context.FlowTasks.Include(t => t.Successors).Include(t => t.Task).First(t => t.Id == flow.FlowTaskId));
+                flowTasks.Add(context.FlowTasks.Where(t => t.Id == flow.FlowTaskId).Include(t => t.Successors).Include(t => t.Task).First());
                 do
                 {
                     flowTasks.AddRange(flowTasks[i].Successors
                         .Select(t => t.SuccessorId)
                         .Where(id => !flowTasks.Any(f => f.Id == id))
                         .Select(id =>
-                            context.FlowTasks.Include(t => t.Successors).Include(t => t.Task).First(t => t.Id == id)
+                            context.FlowTasks.Where(t => t.Id == id).Include(t => t.Successors).Include(t => t.Task).First()
                         ));
                     i++;
                 } while (i < flowTasks.Count);

@@ -76,14 +76,16 @@ namespace SchedulerExecutorApplication
 
             public void OnNext(IOperationResult<IOnFlowStartResult> value)
             {
-                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.Name}: start");
+                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.FlowId}: start");
                 SendStatus(ExecutorStatusCode.Working).Wait();
                 var flowTasksTask = _schedulerServer.GetFlowTasksForFlow.ExecuteAsync(value!.Data.OnFlowStart.Id);
                 flowTasksTask.Wait();
                 var result = flowTasksTask.Result;
-                foreach (var flowTask in result.Data?.FlowTasksForFlow!)
+                var flowRunId = value.Data.OnFlowStart.Id;
+                foreach (var flowTask in result.Data.FlowTasksForFlow!)
                 {
                     //Console.WriteLine($"({flowTask.Task.Name}): start");
+                    SendFlowTaskStatus(FlowTaskStatusCode.Processing, "task started", flowRunId, flowTask.Id).Wait();
                     var process = new Process();
                     process.StartInfo.UseShellExecute = false;
                     var environmentVariables = flowTask.EnvironmentVariables.RootElement.EnumerateArray().ToList();
@@ -98,11 +100,12 @@ namespace SchedulerExecutorApplication
                     process.Start();
                     string s = process.StandardOutput.ReadLine()?.ReplaceLineEndings("");
                     Console.WriteLine($"{flowTask.Task.Name}: " + s);
+                    SendFlowTaskStatus(FlowTaskStatusCode.Done, s, flowRunId, flowTask.Id).Wait();
                     process.WaitForExit();
                     //Console.WriteLine($"({flowTask.Task.Name}): end");
                     Thread.Sleep(1000);
                 }
-                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.Name}: end");
+                Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.FlowId}: end");
                 SendStatus(ExecutorStatusCode.Online).Wait();
                 Console.WriteLine("end");
             }
@@ -146,6 +149,19 @@ namespace SchedulerExecutorApplication
             result.EnsureNoErrors();
         }
 
+        private static async Task SendFlowTaskStatus(FlowTaskStatusCode code, string description, int flowRunId, int flowTaskId)
+        {
+            var result = await _schedulerServer.CreateFlowTaskStatus.ExecuteAsync(new FlowTaskStatusInput
+            {
+                Description = description,
+                FlowRunId = flowRunId,
+                FlowTaskId = flowTaskId,
+                Date = DateTime.UtcNow.Ticks,
+                StatusCode = code
+            });
+            result.EnsureNoErrors();
+        }
+
         private static bool Configured()
         {
             return config.AppSettings.Settings.AllKeys.Contains("accountId") &&
@@ -169,7 +185,7 @@ namespace SchedulerExecutorApplication
 
                     result = await _schedulerServer.GetLogin.ExecuteAsync(login, password);
                     result.EnsureNoErrors();
-                    if (result?.Data?.Login is not null)
+                    if (result?.Data?.LocalLogin is not null)
                     {
                         break;
                     }
@@ -177,8 +193,8 @@ namespace SchedulerExecutorApplication
                     Console.WriteLine("User not found");
                 }
 
-                config.AppSettings.Settings.Add("accountId", result.Data.Login.Id.ToString());
-                config.AppSettings.Settings.Add("accountLogin", result.Data.Login.Login);
+                config.AppSettings.Settings.Add("accountId", result.Data.LocalLogin.Id.ToString());
+                config.AppSettings.Settings.Add("accountLogin", result.Data.LocalLogin.Login);
                 config.Save(ConfigurationSaveMode.Minimal);
             }
             

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,9 +12,14 @@ namespace SchedulerWebApplication.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [GraphQLIgnore]
         public int PersonId { get; set; }
+
+        [StringLength(30)]
         public string Name { get; set; }
+
+        [StringLength(200)]
         public string Description { get; set; }
         
         public virtual Person Person { get; set; }
@@ -26,7 +32,10 @@ namespace SchedulerWebApplication.Models
                 return Statuses?.OrderByDescending(t => t.Date).FirstOrDefault() ??
                        new ExecutorStatus {StatusCode = ExecutorStatusCode.Offline};
             }
-            set{}
+            set
+            {
+                throw new NotSupportedException();    
+            }
         }
 
         [GraphQLIgnore] 

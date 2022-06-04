@@ -100,7 +100,28 @@ namespace SchedulerWebApplication.Mutations
             return savedStatus;
         }
 
-        public async Task<Flow> CreateFlowStart(
+        public async Task<FlowTaskStatus> CreateFlowTaskStatus(
+            FlowTaskStatusInput flowTaskStatusInput,
+            [Service] SchedulerContext context,
+            [Service] ITopicEventSender eventSender
+        )
+        {
+            var savedStatus = (await context.FlowTaskStatuses.AddAsync(new FlowTaskStatus
+            {
+                FlowRunId = flowTaskStatusInput.FlowRunId,
+                FlowTaskId = flowTaskStatusInput.FlowTaskId,
+                Description = flowTaskStatusInput.Description,
+                Date = flowTaskStatusInput.Date,
+                StatusCode = flowTaskStatusInput.StatusCode
+            })).Entity;
+            await context.SaveChangesAsync();
+            await eventSender
+                .SendAsync($"flowRun{flowTaskStatusInput.FlowRunId}", savedStatus)
+                .ConfigureAwait(false);
+            return savedStatus;
+        }
+
+        public async Task<FlowRun> CreateFlowStart(
             int flowId,
             int executorId,
             [Service] SchedulerContext context,
@@ -108,17 +129,17 @@ namespace SchedulerWebApplication.Mutations
         )
         {
             Flow flow = context.Flows.First(f => f.Id == flowId);
-            context.FlowRuns.Add(new FlowRun
+            FlowRun flowRun = context.FlowRuns.Add(new FlowRun
             {
                 FlowId = flowId,
                 ExecutorId = executorId,
                 RunDate = DateTime.UtcNow.Ticks
-            });
+            }).Entity;
             await context.SaveChangesAsync();
             await eventSender
-                .SendAsync($"executor{executorId}", flow)
+                .SendAsync($"executor{executorId}", flowRun)
                 .ConfigureAwait(false);
-            return flow;
+            return flowRun;
         }
 
         public async Task<List<FlowTask>> CreateFlowTasks(

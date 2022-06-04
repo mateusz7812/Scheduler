@@ -1,5 +1,5 @@
 ﻿query GetLogin($login: String, $password: String) {
-    login(login: $login, password: $password){
+    localLogin(login: $login, password: $password){
         id,
         login
     }

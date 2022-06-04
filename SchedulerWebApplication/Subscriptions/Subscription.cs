@@ -10,11 +10,16 @@ namespace SchedulerWebApplication.Subscriptions
         public ExecutorStatus OnExecutorStatusChange(
             [Topic] string topicName,
             [EventMessage] ExecutorStatus executorStatus) => executorStatus;
-        
+
         [Subscribe]
-        public Flow OnFlowStart(
+        public FlowTaskStatus OnFlowRunTasksStatusChange(
             [Topic] string topicName,
-            [EventMessage] Flow flow) => flow;
+            [EventMessage] FlowTaskStatus flowTaskStatus) => flowTaskStatus;
+
+        [Subscribe]
+        public FlowRun OnFlowStart(
+            [Topic] string topicName,
+            [EventMessage] FlowRun flowRun) => flowRun;
 
     }
 }

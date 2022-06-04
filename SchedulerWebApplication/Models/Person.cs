@@ -12,6 +12,8 @@ namespace SchedulerWebApplication.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [StringLength(50)]
         public string Login { get; set; }
 
 

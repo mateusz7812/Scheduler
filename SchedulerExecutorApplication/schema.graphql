@@ -5,25 +5,36 @@
 }
 
 type Query {
-  accounts: [Account]
-  login(login: String password: String): Account
+  accounts: [Person]
+  localLogin(login: String password: String): Person
+  microsoftLogin(microsoftAccountId: String): Person
   executorsForAccount(accountId: Int!): [Executor]
   flowsForAccount(accountId: Int!): [Flow]
+  statusesForFlowRun(flowRunId: Int!): [FlowTaskStatus]
   tasks: [Task]
+  flowRunsForExecutor(executorId: Int!): [FlowRun]
+  flowRunsForFlow(flowId: Int!): [FlowRun]
   flowTasksForFlow(flowId: Int!): [FlowTask]
 }
 
 type Mutation {
-  createAccount(accountInput: CreateAccountInput): AccountOutput
+  createLocalAccount(accountInput: CreateLocalAccountInput): AccountOutput
+  createMicrosoftAccount(accountInput: CreateMicrosoftAccountInput): AccountOutput
   createExecutor(executorInput: CreateExecutorInput): Executor
   createTask(taskInput: TaskInput): Task
+  createFlow(flowInput: FlowInput): Flow
   createStatus(executorStatusInput: ExecutorStatusInput): ExecutorStatus
+  createFlowTaskStatus(flowTaskStatusInput: FlowTaskStatusInput): FlowTaskStatus
   createFlowStart(flowId: Int! executorId: Int!): Flow
+  createFlowTasks(flowTaskNumber: Int!): [FlowTask]
+  updateFlowTasks(flowTasks: [UpdateFlowTaskInput]): [FlowTask]
+  updateFlow(flow: UpdateFlowInput): Flow
 }
 
 type Subscription {
   onExecutorStatusChange(topicName: String): ExecutorStatus
-  onFlowStart(topicName: String): Flow
+  onFlowRunTasksStatusChange(topicName: String): FlowTaskStatus
+  onFlowStart(topicName: String): FlowRun
 }
 
 type Flow {
@@ -37,15 +48,22 @@ type Executor {
   id: Int!
   name: String
   description: String
-  account: Account
+  person: Person
   status: ExecutorStatus
 }
 
-type Account {
+type Person {
   id: Int!
   login: String
-  executors: [Executor]
-  flows: [Flow]
+}
+
+type FlowTaskStatus {
+  id: Int!
+  flowRunId: Int!
+  flowTaskId: Int!
+  statusCode: FlowTaskStatusCode!
+  description: String
+  date: Long!
 }
 
 type Task {
@@ -54,7 +72,16 @@ type Task {
   outputType: String
   name: String
   command: String
+  defaultEnvironmentVariables: Any
   flowTasks: [FlowTask]
+}
+
+type FlowRun {
+  id: Int!
+  runDate: Long!
+  flowId: Int!
+  executorId: Int!
+  status: FlowTaskStatus
 }
 
 type FlowTask {
@@ -71,9 +98,14 @@ type AccountOutput {
   login: String
 }
 
-input CreateAccountInput {
+input CreateLocalAccountInput {
   login: String
   password: String
+}
+
+input CreateMicrosoftAccountInput {
+  login: String
+  microsoftAccountId: UUID!
 }
 
 input CreateExecutorInput {
@@ -87,6 +119,13 @@ input TaskInput {
   outputType: String
   name: String
   command: String
+  defaultEnvironmentVariables: [KeyValuePairOfStringAndStringInput!]
+}
+
+input FlowInput {
+  accountId: Int!
+  name: String
+  description: String
 }
 
 type ExecutorStatus {
@@ -102,7 +141,37 @@ input ExecutorStatusInput {
   date: Long!
 }
 
+input FlowTaskStatusInput {
+  flowRunId: Int!
+  flowTaskId: Int!
+  statusCode: FlowTaskStatusCode!
+  description: String
+  date: Long!
+}
+
+input UpdateFlowTaskInput {
+  id: Int!
+  taskId: Int
+  environmentVariables: [KeyValuePairOfStringAndStringInput!]
+  successorsIds: [Int!]
+}
+
+input UpdateFlowInput {
+  id: Int!
+  flowTaskId: Int
+  name: String
+  description: String
+}
+
 scalar Any
+
+enum FlowTaskStatusCode {
+  WAIT
+  CANCELLED
+  PROCESSING
+  DONE
+  ERROR
+}
 
 "The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
 scalar Long
@@ -113,3 +182,10 @@ enum ExecutorStatusCode {
   WORKING
   ERROR
 }
+
+input KeyValuePairOfStringAndStringInput {
+  key: String!
+  value: String!
+}
+
+scalar UUID

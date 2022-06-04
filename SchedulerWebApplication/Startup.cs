@@ -39,7 +39,7 @@ namespace SchedulerWebApplication
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            InitializeDatabase(app);
+            //InitializeDatabase(app);
 
             if (env.IsDevelopment())
             {
@@ -66,8 +66,8 @@ namespace SchedulerWebApplication
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>()!.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<SchedulerContext>();
-                if (context.Database.EnsureCreated())
-                {
+                //if (context.Database.EnsureCreated())
+                //{
                     var account = new Person { Login = "testLogin"};
 
                     context.LocalAccounts.Add(new LocalAccount 
@@ -193,7 +193,7 @@ namespace SchedulerWebApplication
                     });
 
                     context.SaveChangesAsync();
-                }
+                //}
             }
         }
     }
