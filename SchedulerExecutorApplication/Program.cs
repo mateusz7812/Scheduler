@@ -78,13 +78,13 @@ namespace SchedulerExecutorApplication
             {
                 Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.FlowId}: start");
                 SendStatus(ExecutorStatusCode.Working).Wait();
-                var flowTasksTask = _schedulerServer.GetFlowTasksForFlow.ExecuteAsync(value!.Data.OnFlowStart.Id);
+                var flowTasksTask = _schedulerServer.GetFlowTasksForFlow.ExecuteAsync(value!.Data.OnFlowStart.FlowId);
                 flowTasksTask.Wait();
                 var result = flowTasksTask.Result;
                 var flowRunId = value.Data.OnFlowStart.Id;
                 foreach (var flowTask in result.Data.FlowTasksForFlow!)
                 {
-                    //Console.WriteLine($"({flowTask.Task.Name}): start");
+                    Console.WriteLine($"({flowTask.Task.Name}): start");
                     SendFlowTaskStatus(FlowTaskStatusCode.Processing, "task started", flowRunId, flowTask.Id).Wait();
                     var process = new Process();
                     process.StartInfo.UseShellExecute = false;
@@ -102,12 +102,11 @@ namespace SchedulerExecutorApplication
                     Console.WriteLine($"{flowTask.Task.Name}: " + s);
                     SendFlowTaskStatus(FlowTaskStatusCode.Done, s, flowRunId, flowTask.Id).Wait();
                     process.WaitForExit();
-                    //Console.WriteLine($"({flowTask.Task.Name}): end");
+                    Console.WriteLine($"({flowTask.Task.Name}): end");
                     Thread.Sleep(1000);
                 }
                 Console.WriteLine($"Flow {value?.Data?.OnFlowStart?.FlowId}: end");
                 SendStatus(ExecutorStatusCode.Online).Wait();
-                Console.WriteLine("end");
             }
         }
         

@@ -1911,22 +1911,18 @@ namespace SchedulerExecutorApplication.GraphQl
         {
             return serializedValue switch
             {
-                "OFFLINE" => ExecutorStatusCode.Offline,
-                "ONLINE" => ExecutorStatusCode.Online,
-                "WORKING" => ExecutorStatusCode.Working,
-                "ERROR" => ExecutorStatusCode.Error,
-                _ => throw new global::StrawberryShake.GraphQLClientException()};
+            "OFFLINE" => ExecutorStatusCode.Offline, "ONLINE" => ExecutorStatusCode.Online, "WORKING" => ExecutorStatusCode.Working, "ERROR" => ExecutorStatusCode.Error, _ => throw new global::StrawberryShake.GraphQLClientException()}
+
+            ;
         }
 
         public global::System.Object Format(global::System.Object? runtimeValue)
         {
             return runtimeValue switch
             {
-                ExecutorStatusCode.Offline => "OFFLINE",
-                ExecutorStatusCode.Online => "ONLINE",
-                ExecutorStatusCode.Working => "WORKING",
-                ExecutorStatusCode.Error => "ERROR",
-                _ => throw new global::StrawberryShake.GraphQLClientException()};
+            ExecutorStatusCode.Offline => "OFFLINE", ExecutorStatusCode.Online => "ONLINE", ExecutorStatusCode.Working => "WORKING", ExecutorStatusCode.Error => "ERROR", _ => throw new global::StrawberryShake.GraphQLClientException()}
+
+            ;
         }
     }
 
@@ -1948,24 +1944,18 @@ namespace SchedulerExecutorApplication.GraphQl
         {
             return serializedValue switch
             {
-                "WAIT" => FlowTaskStatusCode.Wait,
-                "CANCELLED" => FlowTaskStatusCode.Cancelled,
-                "PROCESSING" => FlowTaskStatusCode.Processing,
-                "DONE" => FlowTaskStatusCode.Done,
-                "ERROR" => FlowTaskStatusCode.Error,
-                _ => throw new global::StrawberryShake.GraphQLClientException()};
+            "WAIT" => FlowTaskStatusCode.Wait, "CANCELLED" => FlowTaskStatusCode.Cancelled, "PROCESSING" => FlowTaskStatusCode.Processing, "DONE" => FlowTaskStatusCode.Done, "ERROR" => FlowTaskStatusCode.Error, _ => throw new global::StrawberryShake.GraphQLClientException()}
+
+            ;
         }
 
         public global::System.Object Format(global::System.Object? runtimeValue)
         {
             return runtimeValue switch
             {
-                FlowTaskStatusCode.Wait => "WAIT",
-                FlowTaskStatusCode.Cancelled => "CANCELLED",
-                FlowTaskStatusCode.Processing => "PROCESSING",
-                FlowTaskStatusCode.Done => "DONE",
-                FlowTaskStatusCode.Error => "ERROR",
-                _ => throw new global::StrawberryShake.GraphQLClientException()};
+            FlowTaskStatusCode.Wait => "WAIT", FlowTaskStatusCode.Cancelled => "CANCELLED", FlowTaskStatusCode.Processing => "PROCESSING", FlowTaskStatusCode.Done => "DONE", FlowTaskStatusCode.Error => "ERROR", _ => throw new global::StrawberryShake.GraphQLClientException()}
+
+            ;
         }
     }
 
@@ -4659,28 +4649,18 @@ namespace SchedulerExecutorApplication.GraphQl.State
             global::System.String __typename = obj.GetProperty("__typename").GetString()!;
             return __typename switch
             {
-                "Executor" => ParseExecutorEntityId(obj, __typename),
-                "ExecutorStatus" => ParseExecutorStatusEntityId(obj, __typename),
-                "FlowTaskStatus" => ParseFlowTaskStatusEntityId(obj, __typename),
-                "Person" => ParsePersonEntityId(obj, __typename),
-                "FlowTask" => ParseFlowTaskEntityId(obj, __typename),
-                "Task" => ParseTaskEntityId(obj, __typename),
-                "FlowRun" => ParseFlowRunEntityId(obj, __typename),
-                _ => throw new global::System.NotSupportedException()};
+            "Executor" => ParseExecutorEntityId(obj, __typename), "ExecutorStatus" => ParseExecutorStatusEntityId(obj, __typename), "FlowTaskStatus" => ParseFlowTaskStatusEntityId(obj, __typename), "Person" => ParsePersonEntityId(obj, __typename), "FlowTask" => ParseFlowTaskEntityId(obj, __typename), "Task" => ParseTaskEntityId(obj, __typename), "FlowRun" => ParseFlowRunEntityId(obj, __typename), _ => throw new global::System.NotSupportedException()}
+
+            ;
         }
 
         public global::System.String Format(global::StrawberryShake.EntityId entityId)
         {
             return entityId.Name switch
             {
-                "Executor" => FormatExecutorEntityId(entityId),
-                "ExecutorStatus" => FormatExecutorStatusEntityId(entityId),
-                "FlowTaskStatus" => FormatFlowTaskStatusEntityId(entityId),
-                "Person" => FormatPersonEntityId(entityId),
-                "FlowTask" => FormatFlowTaskEntityId(entityId),
-                "Task" => FormatTaskEntityId(entityId),
-                "FlowRun" => FormatFlowRunEntityId(entityId),
-                _ => throw new global::System.NotSupportedException()};
+            "Executor" => FormatExecutorEntityId(entityId), "ExecutorStatus" => FormatExecutorStatusEntityId(entityId), "FlowTaskStatus" => FormatFlowTaskStatusEntityId(entityId), "Person" => FormatPersonEntityId(entityId), "FlowTask" => FormatFlowTaskEntityId(entityId), "Task" => FormatTaskEntityId(entityId), "FlowRun" => FormatFlowRunEntityId(entityId), _ => throw new global::System.NotSupportedException()}
+
+            ;
         }
 
         private global::StrawberryShake.EntityId ParseExecutorEntityId(global::System.Text.Json.JsonElement obj, global::System.String type)
@@ -4806,7 +4786,7 @@ namespace SchedulerExecutorApplication.GraphQl.State
     [global::System.CodeDom.Compiler.GeneratedCode("StrawberryShake", "12.6.0.0")]
     public partial class SchedulerServerStoreAccessor : global::StrawberryShake.StoreAccessor
     {
-        public SchedulerServerStoreAccessor(global::StrawberryShake.IOperationStore operationStore, global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer entityIdSerializer, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory> requestFactories, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory> resultDataFactories) : base(operationStore, entityStore, entityIdSerializer, requestFactories, resultDataFactories)
+        public SchedulerServerStoreAccessor(global::StrawberryShake.IOperationStore operationStore, global::StrawberryShake.IEntityStore entityStore, global::StrawberryShake.IEntityIdSerializer entityIdSerializer, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationRequestFactory> requestFactories, global::System.Collections.Generic.IEnumerable<global::StrawberryShake.IOperationResultDataFactory> resultDataFactories): base(operationStore, entityStore, entityIdSerializer, requestFactories, resultDataFactories)
         {
         }
     }
