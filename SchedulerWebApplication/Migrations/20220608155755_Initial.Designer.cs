@@ -2,16 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Oracle.EntityFrameworkCore.Metadata;
 using SchedulerWebApplication;
 
 namespace SchedulerWebApplication.Migrations
 {
     [DbContext(typeof(SchedulerContext))]
-    [Migration("20220603201226_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220608155755_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,25 +19,25 @@ namespace SchedulerWebApplication.Migrations
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.16")
-                .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("SchedulerWebApplication.Models.Executor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR2(30)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -50,17 +50,17 @@ namespace SchedulerWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<long>("Date")
-                        .HasColumnType("NUMBER(19)");
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ExecutorId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.Property<int>("StatusCode")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -73,28 +73,28 @@ namespace SchedulerWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("FlowTaskId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR2(30)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FlowTaskId")
                         .IsUnique()
-                        .HasFilter("\"FlowTaskId\" IS NOT NULL");
+                        .HasFilter("[FlowTaskId] IS NOT NULL");
 
                     b.HasIndex("PersonId");
 
@@ -105,17 +105,17 @@ namespace SchedulerWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ExecutorId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.Property<int>("FlowId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.Property<long>("RunDate")
-                        .HasColumnType("NUMBER(19)");
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -130,14 +130,14 @@ namespace SchedulerWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("EnvironmentVariables")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TaskId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -146,19 +146,51 @@ namespace SchedulerWebApplication.Migrations
                     b.ToTable("FlowTasks");
                 });
 
+            modelBuilder.Entity("SchedulerWebApplication.Models.FlowTaskStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("Date")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("FlowRunId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FlowTaskId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FlowRunId");
+
+                    b.HasIndex("FlowTaskId");
+
+                    b.ToTable("FlowTaskStatuses");
+                });
+
             modelBuilder.Entity("SchedulerWebApplication.Models.LocalAccount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Password")
                         .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -171,14 +203,14 @@ namespace SchedulerWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<Guid>("MicrosoftAccountId")
-                        .HasColumnType("RAW(16)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -191,12 +223,12 @@ namespace SchedulerWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Login")
-                        .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR2(30)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -206,10 +238,10 @@ namespace SchedulerWebApplication.Migrations
             modelBuilder.Entity("SchedulerWebApplication.Models.StartingUp", b =>
                 {
                     b.Property<int>("PredecessorId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.Property<int>("SuccessorId")
-                        .HasColumnType("NUMBER(10)");
+                        .HasColumnType("int");
 
                     b.HasKey("PredecessorId", "SuccessorId");
 
@@ -222,27 +254,27 @@ namespace SchedulerWebApplication.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)")
-                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Command")
                         .HasMaxLength(200)
-                        .HasColumnType("NVARCHAR2(200)");
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("DefaultEnvironmentVariables")
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InputType")
                         .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR2(30)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR2(30)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("OutputType")
                         .HasMaxLength(30)
-                        .HasColumnType("NVARCHAR2(30)");
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -297,7 +329,7 @@ namespace SchedulerWebApplication.Migrations
                     b.HasOne("SchedulerWebApplication.Models.Flow", "Flow")
                         .WithMany("FlowRuns")
                         .HasForeignKey("FlowId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Executor");
@@ -314,6 +346,21 @@ namespace SchedulerWebApplication.Migrations
                         .IsRequired();
 
                     b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("SchedulerWebApplication.Models.FlowTaskStatus", b =>
+                {
+                    b.HasOne("SchedulerWebApplication.Models.FlowRun", null)
+                        .WithMany("Statuses")
+                        .HasForeignKey("FlowRunId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchedulerWebApplication.Models.FlowTask", null)
+                        .WithMany()
+                        .HasForeignKey("FlowTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SchedulerWebApplication.Models.LocalAccount", b =>
@@ -343,13 +390,13 @@ namespace SchedulerWebApplication.Migrations
                     b.HasOne("SchedulerWebApplication.Models.FlowTask", "Predecessor")
                         .WithMany("Successors")
                         .HasForeignKey("PredecessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SchedulerWebApplication.Models.FlowTask", "Successor")
                         .WithMany("Predecessors")
                         .HasForeignKey("SuccessorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Predecessor");
@@ -367,6 +414,11 @@ namespace SchedulerWebApplication.Migrations
             modelBuilder.Entity("SchedulerWebApplication.Models.Flow", b =>
                 {
                     b.Navigation("FlowRuns");
+                });
+
+            modelBuilder.Entity("SchedulerWebApplication.Models.FlowRun", b =>
+                {
+                    b.Navigation("Statuses");
                 });
 
             modelBuilder.Entity("SchedulerWebApplication.Models.FlowTask", b =>

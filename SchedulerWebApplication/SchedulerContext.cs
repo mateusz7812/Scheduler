@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Oracle.EntityFrameworkCore.Infrastructure;
 using SchedulerWebApplication.Models;
 
 namespace SchedulerWebApplication
@@ -32,7 +31,7 @@ namespace SchedulerWebApplication
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseOracle(@$"User Id=system;Password=oracle;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost"})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=XEPDB1)))");
+            options.UseSqlServer(@"Server=tcp:scheduler-db-server.database.windows.net,1433;Initial Catalog=scheduler_db;Persist Security Info=False;User ID=mateusz7812;Password=Mateusznie7812;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"); //(@$"User Id=system;Password=oracle;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={Environment.GetEnvironmentVariable("DB_HOST") ?? "scheduler-oracle-db.westeurope.azurecontainer.io"})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=XEPDB1)))");
             options.UseLoggerFactory(_loggerFactory);
         }
 
@@ -91,12 +90,14 @@ namespace SchedulerWebApplication
             modelBuilder.Entity<StartingUp>()
                 .HasOne(t => t.Predecessor)
                 .WithMany(t => t.Successors)
-                .HasForeignKey(t => t.PredecessorId);
+                .HasForeignKey(t => t.PredecessorId)    
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<StartingUp>()
                 .HasOne(t => t.Successor)
                 .WithMany(t => t.Predecessors)
-                .HasForeignKey(t => t.SuccessorId);
+                .HasForeignKey(t => t.SuccessorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<FlowRun>()
                 .HasOne(f => f.Executor)
@@ -106,7 +107,8 @@ namespace SchedulerWebApplication
             modelBuilder.Entity<FlowRun>()
                 .HasOne(f => f.Flow)
                 .WithMany(e => e.FlowRuns)
-                .HasForeignKey(f => f.FlowId);
+                .HasForeignKey(f => f.FlowId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<FlowTaskStatus>()
                 .HasOne<FlowRun>()
