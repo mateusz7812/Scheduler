@@ -31,7 +31,7 @@ namespace SchedulerWebApplication
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Server=tcp:scheduler-db-server.database.windows.net,1433;Initial Catalog=scheduler_db;Persist Security Info=False;User ID=mateusz7812;Password=Mateusznie7812;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"); //(@$"User Id=system;Password=oracle;Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST={Environment.GetEnvironmentVariable("DB_HOST") ?? "scheduler-oracle-db.westeurope.azurecontainer.io"})(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=XEPDB1)))");
+            options.UseSqlServer("deleted");
             options.UseLoggerFactory(_loggerFactory);
         }
 
